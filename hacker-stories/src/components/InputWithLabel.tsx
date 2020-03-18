@@ -1,32 +1,39 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 export interface InputWithLabelProps {
 	id: string;
-	label: string;
 	value: string;
 	onInputChange: any;
 	type?: string;
-	name?: string;
+	children?: ReactNode;
+	isFocused: boolean;
 }
-
 const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	id,
-	label,
 	type = "text",
 	value,
 	onInputChange,
-	name
+	children,
+	isFocused
 }) => {
+	const inputRef = React.useRef<HTMLInputElement>(null);
+
+	React.useEffect(() => {
+		if (isFocused && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [isFocused]);
 	return (
 		<>
-			<label htmlFor={id}>{label}</label>
+			<label htmlFor={id}>{children}</label>
 			&nbsp;
 			<input
+				ref={inputRef}
 				id={id}
 				type={type}
 				value={value}
 				onChange={onInputChange}
-				name={name}
+				autoFocus={isFocused}
 			/>
 		</>
 	);

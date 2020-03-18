@@ -9,14 +9,13 @@ export interface SearchProps {
 const Search: React.SFC<SearchProps> = ({ onSearch, search }) => {
 	return (
 		<div>
-			<InputWithLabel
+			{/* <InputWithLabel
 				id='search'
-				label='Search:'
 				name='search'
 				type='text'
 				value={search}
 				onInputChange={onSearch}
-			/>
+			/> */}
 		</div>
 	);
 };
