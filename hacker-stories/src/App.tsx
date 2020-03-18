@@ -4,6 +4,7 @@ import "./App.css";
 import List from "./components/List";
 import Search from "./components/Search";
 import useSemiPersistentState from "./customHooks/index";
+import InputWithLabel from "./components/InputWithLabel";
 
 export interface AppProps {}
 
@@ -42,6 +43,7 @@ const App: React.SFC<AppProps> = () => {
 		<div className='App'>
 			{/* <h1>Hello, {getTitle("React with typeScript")}</h1> */}
 			<h1>My Hacker Stories</h1>
+
 			<Search onSearch={handleSearch} search={searchTerm} />
 			{/* <header className='App-header'>
 				<Counter />

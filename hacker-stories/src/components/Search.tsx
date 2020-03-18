@@ -1,4 +1,5 @@
 import React from "react";
+import InputWithLabel from "./InputWithLabel";
 
 export interface SearchProps {
 	onSearch: any;
@@ -8,13 +9,13 @@ export interface SearchProps {
 const Search: React.SFC<SearchProps> = ({ onSearch, search }) => {
 	return (
 		<div>
-			<label htmlFor='search'>Search: </label>
-			<input
-				type='text'
+			<InputWithLabel
 				id='search'
+				label='Search:'
 				name='search'
-				onChange={onSearch}
+				type='text'
 				value={search}
+				onInputChange={onSearch}
 			/>
 		</div>
 	);
