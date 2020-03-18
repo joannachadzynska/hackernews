@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { Counter } from "./features/counter/Counter";
+import React from "react";
+// import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import List from "./components/List";
 import Search from "./components/Search";
+import useSemiPersistentState from "./customHooks/index";
 
 export interface AppProps {}
 
 const App: React.SFC<AppProps> = () => {
-	const [searchTerm, setSearchTerm] = useState("");
-	const getTitle = (title: string) => title;
+	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
+
+	// const getTitle = (title: string) => title;
 	const stories = [
 		{
 			title: "React",
