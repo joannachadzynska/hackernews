@@ -44,7 +44,15 @@ const App: React.SFC<AppProps> = () => {
 			{/* <h1>Hello, {getTitle("React with typeScript")}</h1> */}
 			<h1>My Hacker Stories</h1>
 
-			<Search onSearch={handleSearch} search={searchTerm} />
+			<InputWithLabel
+				id='search'
+				value={searchTerm}
+				onInputChange={handleSearch}
+				isFocused>
+				Search
+			</InputWithLabel>
+
+			{/* <Search onSearch={handleSearch} search={searchTerm} /> */}
 			{/* <header className='App-header'>
 				<Counter />
 			</header> */}
