@@ -3,9 +3,12 @@ import ListItem from "./ListItem";
 
 export interface ListProps {
 	list: any;
+	onRemoveItem: any;
 }
 
-const List: React.SFC<ListProps> = ({ list }) =>
-	list.map((item: any) => <ListItem key={item.objectID} {...item} />);
+const List: React.SFC<ListProps> = ({ list, onRemoveItem }) =>
+	list.map((item: any) => (
+		<ListItem key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
+	));
 
 export default List;
