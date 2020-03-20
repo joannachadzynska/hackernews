@@ -1,12 +1,15 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useCallback, useState } from "react";
 // import { Counter } from "./features/counter/Counter";
-import "./App.css";
+import styles from "./App.module.css";
 import List from "./components/List";
 import useSemiPersistentState from "./customHooks/index";
 import InputWithLabel from "./components/InputWithLabel";
-import { initialStories } from "./data/data.js";
+import axios from "axios";
+import SearchForm from "./components/SearchForm";
 
 export interface AppProps {}
+
+const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
 export const storiesReducer = (state: any, action: any) => {
 	switch (action.type) {
@@ -45,14 +48,15 @@ export const storiesReducer = (state: any, action: any) => {
 	}
 };
 
-const getAsyncStories = () =>
-	// new Promise((resolve, reject) => setTimeout(() => reject, 2000));
-	new Promise((resolve) =>
-		setTimeout(() => resolve({ data: { stories: initialStories } }), 2000)
-	);
+// const getAsyncStories = () =>
+// 	new Promise((resolve) =>
+// 		setTimeout(() => resolve({ data: { stories: initialStories } }), 2000)
+// 	);
 
 const App: React.SFC<AppProps> = () => {
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
+
+	const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
 
 	const [stories, dispatchStories] = useReducer(storiesReducer, {
 		data: [],
@@ -60,18 +64,25 @@ const App: React.SFC<AppProps> = () => {
 		isError: false
 	});
 
-	useEffect(() => {
+	const handleFetchStories = useCallback(async () => {
+		if (!searchTerm) return;
 		dispatchStories({ type: "STORIES_FETCH_INIT" });
 
-		getAsyncStories()
-			.then((result: any) => {
-				dispatchStories({
-					type: "STORIES_FETCH_SUCCESS",
-					payload: result.data.stories
-				});
-			})
-			.catch(() => dispatchStories({ type: "STORIES_FETCH_FAILURE" }));
-	}, []);
+		try {
+			const result = await axios.get(url);
+
+			dispatchStories({
+				type: "STORIES_FETCH_SUCCESS",
+				payload: result.data.hits
+			});
+		} catch {
+			dispatchStories({ type: "STORES_FETCH_FAILURE" });
+		}
+	}, [url]);
+
+	useEffect(() => {
+		handleFetchStories();
+	}, [handleFetchStories]);
 
 	const handleRemoveStory = (item: any) => {
 		dispatchStories({
@@ -82,28 +93,30 @@ const App: React.SFC<AppProps> = () => {
 
 	// const getTitle = (title: string) => title;
 
-	const handleSearch = (e: any) => {
+	const handleSearchInput = (e: any) => {
 		setSearchTerm(e.target.value);
 	};
 
-	const searchedStories = stories.data.filter((story: any) =>
-		story.title.toLowerCase().includes(searchTerm.toLowerCase())
-	);
+	const handleSearchSubmit = (e: any) => {
+		e.preventDefault();
+		setUrl(`${API_ENDPOINT}${searchTerm}`);
+	};
+
+	// const searchedStories = stories.data.filter((story: any) =>
+	// 	story.title.toLowerCase().includes(searchTerm.toLowerCase())
+	// );
 
 	return (
-		<div className='App'>
+		<div className={styles.container}>
 			{/* <h1>Hello, {getTitle("React with typeScript")}</h1> */}
-			<h1>My Hacker Stories</h1>
+			<h1 className={styles.headlinePrimary}>My Hacker Stories</h1>
 
-			<InputWithLabel
-				id='search'
-				value={searchTerm}
-				onInputChange={handleSearch}
-				isFocused>
-				Search
-			</InputWithLabel>
+			<SearchForm
+				searchTerm={searchTerm}
+				onSearchInput={handleSearchInput}
+				onSearchSubmit={handleSearchSubmit}
+			/>
 
-			{/* <Search onSearch={handleSearch} search={searchTerm} /> */}
 			{/* <header className='App-header'>
 				<Counter />
 			</header> */}
@@ -114,7 +127,7 @@ const App: React.SFC<AppProps> = () => {
 			{stories.isLoading ? (
 				<p>Loading...</p>
 			) : (
-				<List list={searchedStories} onRemoveItem={handleRemoveStory} />
+				<List list={stories.data} onRemoveItem={handleRemoveStory} />
 			)}
 		</div>
 	);

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../App.module.css";
 
 export interface ListItemProps {
 	item: {
@@ -20,7 +21,7 @@ const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {
 	};
 
 	return (
-		<div>
+		<div className={styles.item}>
 			<span>
 				<a href={url}>{title}</a>
 			</span>
@@ -28,7 +29,10 @@ const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {
 			<span>{num_comments}</span>
 			<span>{points}</span>
 			<span>
-				<button onClick={handleRemoveItem} type='button'>
+				<button
+					onClick={handleRemoveItem}
+					type='button'
+					className={`${styles.button} ${styles.buttonSmall}`}>
 					Dismiss
 				</button>
 			</span>

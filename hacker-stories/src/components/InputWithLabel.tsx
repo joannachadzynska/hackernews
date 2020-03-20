@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import styles from "../App.module.css";
 
 export interface InputWithLabelProps {
 	id: string;
@@ -25,7 +26,9 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	}, [isFocused]);
 	return (
 		<>
-			<label htmlFor={id}>{children}</label>
+			<label htmlFor={id} className={styles.label}>
+				{children}
+			</label>
 			&nbsp;
 			<input
 				ref={inputRef}
@@ -34,6 +37,7 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 				value={value}
 				onChange={onInputChange}
 				autoFocus={isFocused}
+				className={styles.input}
 			/>
 		</>
 	);
