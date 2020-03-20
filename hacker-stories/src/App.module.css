@@ -1,0 +1,109 @@
+:root {
+	--main-color: #83a4d4;
+	--secondary-color: #b6fbff;
+	--font-color-dark: #171212;
+	--font-color-light: #ffffff;
+}
+
+.container {
+	height: 100vw;
+	padding: 1.25rem;
+	background: var(--main-color);
+	background: linear-gradient(
+		to left,
+		var(--secondary-color),
+		var(--main-color)
+	);
+	color: var(--font-color-dark);
+}
+
+.headlinePrimary {
+	font-size: 3rem;
+	font-weight: 300;
+	letter-spacing: 2px;
+}
+
+/* ListItem */
+.item {
+	display: flex;
+	align-items: center;
+	padding-bottom: 5px;
+}
+
+.item > span {
+	padding: 0 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.item > span > a {
+	color: inherit;
+}
+
+.item > span:nth-child(1) {
+	width: 40%;
+}
+.item > span:nth-child(2) {
+	width: 30%;
+}
+.item > span:nth-child(3) {
+	width: 10%;
+}
+.item > span:nth-child(4) {
+	width: 10%;
+}
+.item > span:nth-child(5) {
+	width: 10%;
+}
+
+/* Buttons */
+
+.button {
+	background: transparent;
+	border: 1px solid var(--font-color-dark);
+	padding: 5px;
+	cursor: pointer;
+	transition: all 0.1s ease-in;
+	-webkit-transition: all 0.1s ease-in;
+	-moz-transition: all 0.1s ease-in;
+	-ms-transition: all 0.1s ease-in;
+	-o-transition: all 0.1s ease-in;
+}
+
+.button:hover {
+	background: var(--font-color-dark);
+	color: var(--font-color-light);
+}
+
+.buttonSmall {
+	padding: 5px;
+}
+
+.buttonLarge {
+	padding: 10px;
+}
+
+/* Search form */
+
+.searchForm {
+	padding: 10px 0 20px 0;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-around;
+	width: 50%;
+}
+
+.label {
+	border-top: 1px solid var(--font-color-dark);
+	border-left: 1px solid var(--font-color-dark);
+	font-size: 1.5rem;
+	padding-left: 5px;
+}
+
+.input {
+	border: none;
+	border-bottom: 1px solid var(--font-color-dark);
+	background-color: transparent;
+	font-size: 1.5rem;
+}
