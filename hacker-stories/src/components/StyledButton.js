@@ -15,6 +15,10 @@ export const StyledButton = styled.button`
 		background: #171212;
 		color: #ffffff;
 	}
+	&:hover > svg > g {
+		fill: #ffffff;
+		stroke: #ffffff;
+	}
 `;
 
 export const StyledButtonSmall = styled(StyledButton)`

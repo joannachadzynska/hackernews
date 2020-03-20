@@ -4,6 +4,7 @@ import React, { useEffect, useReducer, useCallback, useState } from "react";
 import List from "./components/List";
 import useSemiPersistentState from "./customHooks/index";
 import axios from "axios";
+import { ReactComponent as Check } from "./assets/logo.svg";
 import styled from "styled-components";
 import SearchForm from "./components/SearchForm";
 

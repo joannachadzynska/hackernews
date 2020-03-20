@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../App.module.css";
 import styled from "styled-components";
 import { StyledButtonSmall } from "./StyledButton";
+import { ReactComponent as Check } from "../assets/logo.svg";
 
 const StyledItem = styled.div`
 	display: flex;
@@ -54,7 +55,7 @@ const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {
 					onClick={handleRemoveItem}
 					type='button'
 					className={`${styles.button} ${styles.buttonSmall}`}>
-					Dismiss
+					<Check height='18px' width='18px' />
 				</StyledButtonSmall>
 			</StyledColumn>
 		</StyledItem>
