@@ -1,10 +1,16 @@
-import React, { useEffect, useReducer, useCallback, useState } from "react";
+import React, {
+	useEffect,
+	useReducer,
+	useCallback,
+	useState,
+	useMemo
+} from "react";
 // import { Counter } from "./features/counter/Counter";
 // import styles from "./App.module.css";
 import List from "./components/List";
 import useSemiPersistentState from "./customHooks/index";
 import axios from "axios";
-import { ReactComponent as Check } from "./assets/logo.svg";
+
 import styled from "styled-components";
 import SearchForm from "./components/SearchForm";
 
@@ -68,7 +74,17 @@ export const storiesReducer = (state: any, action: any) => {
 // 		setTimeout(() => resolve({ data: { stories: initialStories } }), 2000)
 // 	);
 
+const getSumComments = (stories: any) => {
+	console.log("C");
+	return stories.data.reduce(
+		(result: any, value: any) => result + value.num_comments,
+		0
+	);
+};
+
 const App: React.SFC<AppProps> = () => {
+	console.log("B:App");
+
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
 
 	const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
@@ -99,12 +115,12 @@ const App: React.SFC<AppProps> = () => {
 		handleFetchStories();
 	}, [handleFetchStories]);
 
-	const handleRemoveStory = (item: any) => {
+	const handleRemoveStory = useCallback((item: any) => {
 		dispatchStories({
 			type: "REMOVE_STORY",
 			payload: item
 		});
-	};
+	}, []);
 
 	// const getTitle = (title: string) => title;
 
@@ -121,11 +137,14 @@ const App: React.SFC<AppProps> = () => {
 	// 	story.title.toLowerCase().includes(searchTerm.toLowerCase())
 	// );
 
+	const sumComments = useMemo(() => getSumComments(stories), [stories]);
 	return (
 		<StyledContainer>
 			{/* <h1>Hello, {getTitle("React with typeScript")}</h1> */}
 
-			<StyledHeadlinePrimary>My Hacker Stories</StyledHeadlinePrimary>
+			<StyledHeadlinePrimary>
+				My Hacker Stories with {sumComments} comments.
+			</StyledHeadlinePrimary>
 
 			<SearchForm
 				searchTerm={searchTerm}

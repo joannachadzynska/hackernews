@@ -6,9 +6,12 @@ export interface ListProps {
 	onRemoveItem: any;
 }
 
-const List: React.SFC<ListProps> = ({ list, onRemoveItem }) =>
-	list.map((item: any) => (
+const List: React.SFC<ListProps> = React.memo(({ list, onRemoveItem }) => {
+	console.log("B:List");
+
+	return list.map((item: any) => (
 		<ListItem key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
 	));
+});
 
 export default List;
