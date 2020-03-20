@@ -1,5 +1,20 @@
 import React, { ReactNode } from "react";
 import styles from "../App.module.css";
+import styled from "styled-components";
+
+const StyledLabel = styled.label`
+	border-top: 1px solid #171212;
+	border-left: 1px solid #171212;
+	font-size: 1.5rem;
+	padding-left: 5px;
+`;
+
+const StyledInput = styled.input`
+	border: none;
+	border-bottom: 1px solid #171212;
+	background-color: transparent;
+	font-size: 1.5rem;
+`;
 
 export interface InputWithLabelProps {
 	id: string;
@@ -26,18 +41,15 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	}, [isFocused]);
 	return (
 		<>
-			<label htmlFor={id} className={styles.label}>
-				{children}
-			</label>
+			<StyledLabel htmlFor={id}>{children}</StyledLabel>
 			&nbsp;
-			<input
+			<StyledInput
 				ref={inputRef}
 				id={id}
 				type={type}
 				value={value}
 				onChange={onInputChange}
 				autoFocus={isFocused}
-				className={styles.input}
 			/>
 		</>
 	);

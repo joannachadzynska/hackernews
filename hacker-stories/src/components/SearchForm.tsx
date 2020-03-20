@@ -1,6 +1,16 @@
 import * as React from "react";
 import InputWithLabel from "./InputWithLabel";
 import styles from "../App.module.css";
+import styled from "styled-components";
+import { StyledButtonLarge } from "./StyledButton";
+
+const StyledSearchForm = styled.form`
+	padding: 10px 0 20px 0;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-around;
+	width: 50%;
+`;
 
 export interface SearchFormProps {
 	searchTerm: string;
@@ -14,7 +24,7 @@ const SearchForm: React.SFC<SearchFormProps> = ({
 	onSearchSubmit
 }) => {
 	return (
-		<form onSubmit={onSearchSubmit} className={styles.searchForm}>
+		<StyledSearchForm onSubmit={onSearchSubmit}>
 			<InputWithLabel
 				id='search'
 				value={searchTerm}
@@ -22,13 +32,10 @@ const SearchForm: React.SFC<SearchFormProps> = ({
 				isFocused>
 				<strong>Search: </strong>
 			</InputWithLabel>
-			<button
-				type='submit'
-				disabled={!searchTerm}
-				className={`${styles.button} ${styles.buttonLarge}`}>
+			<StyledButtonLarge type='submit' disabled={!searchTerm}>
 				Submit
-			</button>
-		</form>
+			</StyledButtonLarge>
+		</StyledSearchForm>
 	);
 };
 
