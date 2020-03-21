@@ -6,13 +6,43 @@ import React, {
 	useMemo
 } from "react";
 // import { Counter } from "./features/counter/Counter";
-// import styles from "./App.module.css";
 import List from "./components/List";
 import useSemiPersistentState from "./customHooks/index";
 import axios from "axios";
 
 import styled from "styled-components";
 import SearchForm from "./components/SearchForm";
+import { Story, Stories } from "./types/types";
+
+type StoriesState = {
+	data: Stories;
+	isLoading: boolean;
+	isError: boolean;
+};
+
+interface StoriesFetchInitAction {
+	type: "STORIES_FETCH_INIT";
+}
+
+interface StoriesFetchSuccessAction {
+	type: "STORIES_FETCH_SUCCESS";
+	payload: Stories;
+}
+
+interface StoriesFetchFailureAction {
+	type: "STORIES_FETCH_FAILURE";
+}
+
+interface StoriesRemoveAction {
+	type: "REMOVE_STORY";
+	payload: Story;
+}
+
+type StoriesAction =
+	| StoriesFetchInitAction
+	| StoriesFetchSuccessAction
+	| StoriesFetchFailureAction
+	| StoriesRemoveAction;
 
 export interface AppProps {}
 
@@ -32,7 +62,7 @@ const StyledHeadlinePrimary = styled.h1`
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
-export const storiesReducer = (state: any, action: any) => {
+export const storiesReducer = (state: StoriesState, action: StoriesAction) => {
 	switch (action.type) {
 		case "STORIES_FETCH_INIT":
 			return {
@@ -69,11 +99,6 @@ export const storiesReducer = (state: any, action: any) => {
 	}
 };
 
-// const getAsyncStories = () =>
-// 	new Promise((resolve) =>
-// 		setTimeout(() => resolve({ data: { stories: initialStories } }), 2000)
-// 	);
-
 const getSumComments = (stories: any) => {
 	console.log("C");
 	return stories.data.reduce(
@@ -107,7 +132,7 @@ const App: React.SFC<AppProps> = () => {
 				payload: result.data.hits
 			});
 		} catch {
-			dispatchStories({ type: "STORES_FETCH_FAILURE" });
+			dispatchStories({ type: "STORIES_FETCH_FAILURE" });
 		}
 	}, [url]);
 
@@ -115,33 +140,25 @@ const App: React.SFC<AppProps> = () => {
 		handleFetchStories();
 	}, [handleFetchStories]);
 
-	const handleRemoveStory = useCallback((item: any) => {
+	const handleRemoveStory = useCallback((item: Story) => {
 		dispatchStories({
 			type: "REMOVE_STORY",
 			payload: item
 		});
 	}, []);
 
-	// const getTitle = (title: string) => title;
-
-	const handleSearchInput = (e: any) => {
+	const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
 	};
 
-	const handleSearchSubmit = (e: any) => {
+	const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setUrl(`${API_ENDPOINT}${searchTerm}`);
 	};
 
-	// const searchedStories = stories.data.filter((story: any) =>
-	// 	story.title.toLowerCase().includes(searchTerm.toLowerCase())
-	// );
-
 	const sumComments = useMemo(() => getSumComments(stories), [stories]);
 	return (
 		<StyledContainer>
-			{/* <h1>Hello, {getTitle("React with typeScript")}</h1> */}
-
 			<StyledHeadlinePrimary>
 				My Hacker Stories with {sumComments} comments.
 			</StyledHeadlinePrimary>

@@ -3,6 +3,7 @@ import styles from "../App.module.css";
 import styled from "styled-components";
 import { StyledButtonSmall } from "./StyledButton";
 import { ReactComponent as Check } from "../assets/logo.svg";
+import { Story } from "../types/types";
 
 const StyledItem = styled.div`
 	display: flex;
@@ -24,16 +25,9 @@ const StyledColumn = styled.span<{ width: string }>`
 `;
 
 export interface ListItemProps {
-	item: {
-		title: string;
-		url: string;
-		author: string;
-		num_comments: number;
-		points: number;
-		objectID: number;
-	};
+	item: Story;
 	key: any;
-	onRemoveItem: any;
+	onRemoveItem: (item: Story) => void;
 }
 
 const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {

@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import styles from "../App.module.css";
 import styled from "styled-components";
 
 const StyledLabel = styled.label`
@@ -19,10 +18,10 @@ const StyledInput = styled.input`
 export interface InputWithLabelProps {
 	id: string;
 	value: string;
-	onInputChange: any;
+	onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	type?: string;
 	children?: ReactNode;
-	isFocused: boolean;
+	isFocused?: boolean;
 }
 const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	id,
@@ -39,6 +38,7 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 			inputRef.current.focus();
 		}
 	}, [isFocused]);
+
 	return (
 		<>
 			<StyledLabel htmlFor={id}>{children}</StyledLabel>
