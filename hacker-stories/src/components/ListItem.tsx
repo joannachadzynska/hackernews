@@ -26,7 +26,7 @@ const StyledColumn = styled.span<{ width: string }>`
 
 export interface ListItemProps {
 	item: Story;
-	key: any;
+	key?: any;
 	onRemoveItem: (item: Story) => void;
 }
 

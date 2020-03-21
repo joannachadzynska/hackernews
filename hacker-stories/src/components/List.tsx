@@ -2,7 +2,7 @@ import * as React from "react";
 import ListItem from "./ListItem";
 import { Stories, Story } from "../types/types";
 
-interface ListProps {
+export interface ListProps {
 	list: Stories;
 	onRemoveItem: (item: Story) => void;
 }
