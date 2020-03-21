@@ -12,6 +12,7 @@
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.7",
+    "@types/react-test-renderer": "^16.9.2",
     "@types/styled-components": "^5.0.1",
     "axios": "^0.19.2",
     "react": "^16.13.0",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-test-renderer": "^16.13.1"
   }
 }
