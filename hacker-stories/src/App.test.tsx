@@ -6,19 +6,10 @@ import axios from "axios";
 // import { Provider } from "react-redux";
 // import { store } from "./app/store";
 import App from "./App";
-import { ListItem, List, SearchForm, InputWithLabel } from "./components";
+import { ListItem, List, SearchForm } from "./components";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-// test('renders learn react link', () => {
-//   const { getByText } = render(
-//     <Provider store={store}>
-//       <App />
-//     </Provider>
-//   );
-
-//   expect(getByText(/learn/i)).toBeInTheDocument();
-// });
 
 // test suite
 // describe("something truthy", () => {
