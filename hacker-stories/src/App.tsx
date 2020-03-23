@@ -5,10 +5,12 @@ import React, {
 	useState,
 	useMemo
 } from "react";
+import axios from "axios";
+
 // import { Counter } from "./features/counter/Counter";
 import { List, SearchForm } from "./components";
 import useSemiPersistentState from "./customHooks/index";
-import axios from "axios";
+
 import { StoriesState, StoriesAction } from "./types";
 import { Story } from "./components/+List/types";
 import { StyledContainer, StyledHeadlinePrimary } from "./style";
@@ -53,7 +55,6 @@ export const storiesReducer = (state: StoriesState, action: StoriesAction) => {
 };
 
 const getSumComments = (stories: any) => {
-	console.log("C");
 	return stories.data.reduce(
 		(result: any, value: any) => result + value.num_comments,
 		0
@@ -61,8 +62,6 @@ const getSumComments = (stories: any) => {
 };
 
 const App = () => {
-	console.log("B:App");
-
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
 
 	const [url, setUrl] = useState(`${API_ENDPOINT}${searchTerm}`);
