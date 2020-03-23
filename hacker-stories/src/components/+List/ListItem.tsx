@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "../App.module.css";
 import styled from "styled-components";
-import { StyledButtonSmall } from "./StyledButton";
+import { StyledButtonSmall } from "../StyledButton";
 import { ReactComponent as Check } from "../assets/logo.svg";
-import { Story } from "../types/types";
+import { Story } from "../../types/types";
 
 const StyledItem = styled.div`
 	display: flex;

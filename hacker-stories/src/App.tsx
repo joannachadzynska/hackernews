@@ -7,12 +7,12 @@ import React, {
 } from "react";
 // import { Counter } from "./features/counter/Counter";
 
-import List from "./components/List";
+import List from "./components/+List/List";
 import useSemiPersistentState from "./customHooks/index";
 import axios from "axios";
 
 import styled from "styled-components";
-import SearchForm from "./components/SearchForm";
+import SearchForm from "./components/+SearchForm/SearchForm";
 import { Story, Stories } from "./types/types";
 
 type StoriesState = {

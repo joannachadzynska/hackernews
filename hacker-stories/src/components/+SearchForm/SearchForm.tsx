@@ -1,7 +1,7 @@
 import * as React from "react";
-import InputWithLabel from "./InputWithLabel";
+import InputWithLabel from "../+InputWithLabel";
 import styled from "styled-components";
-import { StyledButtonLarge } from "./StyledButton";
+import { StyledButtonLarge } from "../StyledButton";
 
 const StyledSearchForm = styled.form`
 	padding: 10px 0 20px 0;

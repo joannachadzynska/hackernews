@@ -1,6 +1,6 @@
 import * as React from "react";
 import ListItem from "./ListItem";
-import { Stories, Story } from "../types/types";
+import { Stories, Story } from "../../types/types";
 
 export interface ListProps {
 	list: Stories;
