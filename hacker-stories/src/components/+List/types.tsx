@@ -9,6 +9,11 @@ export type Story = {
 
 export type Stories = Array<Story>;
 
+export interface ListProps {
+	list: Stories;
+	onRemoveItem: (item: Story) => void;
+}
+
 export interface ListItemProps {
 	item: Story;
 	key?: any;

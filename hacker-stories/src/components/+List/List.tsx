@@ -1,21 +1,57 @@
 import * as React from "react";
+import { sortBy } from "lodash";
 import ListItem from "./ListItem";
-import { Stories, Story } from "./types";
+import { ListProps } from "./types";
+import { StyledColumn, StyledItem } from "./style";
+import { StyledButtonSmall } from "../shared/Button/style";
 
-export interface ListProps {
-	list: Stories;
-	onRemoveItem: (item: Story) => void;
-}
+const List: React.SFC<ListProps> = ({ list, onRemoveItem }) => {
+	const [sort, setSort] = React.useState({
+		sortKey: "NONE",
+		isReverse: false
+	});
 
-const List: React.SFC<ListProps> = ({ list, onRemoveItem }: ListProps) => {
-	console.log("B:List");
+	const handleSort = (sortKey: string) => {
+		const isReverse = sort.sortKey === sortKey && !sort.isReverse;
+		setSort({ sortKey, isReverse });
+	};
+
+	const SORTS: any = {
+		NONE: (list: ListProps) => list,
+		TITLE: (list: ListProps) => sortBy(list, "title"),
+		AUTHOR: (list: ListProps) => sortBy(list, "author"),
+		COMMENT: (list: ListProps) => sortBy(list, "num_comments").reverse(),
+		POINT: (list: ListProps) => sortBy(list, "points").reverse()
+	};
+
+	const sortFunction = SORTS[sort.sortKey];
+	const sortedList = sort.isReverse
+		? sortFunction(list).reverse()
+		: sortFunction(list);
 
 	return (
-		<>
-			{list.map((item: any) => (
+		<div>
+			<StyledItem>
+				<StyledColumn width='40%'>
+					<StyledButtonSmall onClick={() => handleSort("TITLE")}>
+						Title
+					</StyledButtonSmall>
+				</StyledColumn>
+				<StyledColumn width='30%' onClick={() => handleSort("AUTHOR")}>
+					<StyledButtonSmall>Author</StyledButtonSmall>
+				</StyledColumn>
+				<StyledColumn width='10%' onClick={() => handleSort("COMMENT")}>
+					<StyledButtonSmall>Comments</StyledButtonSmall>
+				</StyledColumn>
+				<StyledColumn width='10%' onClick={() => handleSort("POINT")}>
+					<StyledButtonSmall>Points</StyledButtonSmall>
+				</StyledColumn>
+				<StyledColumn width='10%'>Actions</StyledColumn>
+			</StyledItem>
+			{sortedList.map((item: any) => (
 				<ListItem key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
 			))}
-		</>
+		</div>
 	);
 };
 
