@@ -1,8 +1,7 @@
 import * as React from "react";
+import { UsersProps } from "./types";
 
-export interface UsersProps {}
-
-const Users: React.SFC<UsersProps> = () => {
+const Users: React.SFC<UsersProps> = ({ children }) => {
 	return (
 		<div>
 			<h1>Users</h1>

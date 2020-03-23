@@ -1,8 +1,7 @@
 import React from "react";
+import { ButtonProps } from "./types";
 
-export interface ButtonProps {}
-
-const Button: React.SFC<ButtonProps> = () => {
+const Button: React.SFC<ButtonProps> = ({ children }) => {
 	return <button>button</button>;
 };
 

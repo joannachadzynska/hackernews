@@ -1,21 +1,8 @@
 import * as React from "react";
 import InputWithLabel from "../+InputWithLabel";
-import styled from "styled-components";
-import { StyledButtonLarge } from "../StyledButton";
-
-const StyledSearchForm = styled.form`
-	padding: 10px 0 20px 0;
-	display: flex;
-	align-items: baseline;
-	justify-content: space-around;
-	width: 50%;
-`;
-
-export interface SearchFormProps {
-	searchTerm: string;
-	onSearchInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	onSearchSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
+import { StyledButtonLarge } from "../shared/Button/style";
+import { SearchFormProps } from "./types";
+import { StyledSearchForm } from "./style";
 
 const SearchForm: React.SFC<SearchFormProps> = ({
 	searchTerm,

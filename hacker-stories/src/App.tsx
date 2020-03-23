@@ -6,60 +6,12 @@ import React, {
 	useMemo
 } from "react";
 // import { Counter } from "./features/counter/Counter";
-
-import List from "./components/+List/List";
+import { List, SearchForm } from "./components";
 import useSemiPersistentState from "./customHooks/index";
 import axios from "axios";
-
-import styled from "styled-components";
-import SearchForm from "./components/+SearchForm/SearchForm";
-import { Story, Stories } from "./types/types";
-
-type StoriesState = {
-	data: Stories;
-	isLoading: boolean;
-	isError: boolean;
-};
-
-interface StoriesFetchInitAction {
-	type: "STORIES_FETCH_INIT";
-}
-
-interface StoriesFetchSuccessAction {
-	type: "STORIES_FETCH_SUCCESS";
-	payload: Stories;
-}
-
-interface StoriesFetchFailureAction {
-	type: "STORIES_FETCH_FAILURE";
-}
-
-interface StoriesRemoveAction {
-	type: "REMOVE_STORY";
-	payload: Story;
-}
-
-type StoriesAction =
-	| StoriesFetchInitAction
-	| StoriesFetchSuccessAction
-	| StoriesFetchFailureAction
-	| StoriesRemoveAction;
-
-export interface AppProps {}
-
-const StyledContainer = styled.div`
-	height: 100vw;
-	padding: 1.25rem;
-	background: #83a4d4;
-	background: linear-gradient(to left, #b6fbff, #83a4d4);
-	color: #171212;
-`;
-
-const StyledHeadlinePrimary = styled.h1`
-	font-size: 3rem;
-	font-weight: 300;
-	letter-spacing: 2px;
-`;
+import { StoriesState, StoriesAction } from "./types";
+import { Story } from "./components/+List/types";
+import { StyledContainer, StyledHeadlinePrimary } from "./style";
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
 
@@ -108,7 +60,7 @@ const getSumComments = (stories: any) => {
 	);
 };
 
-const App: React.SFC<AppProps> = () => {
+const App = () => {
 	console.log("B:App");
 
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
@@ -135,7 +87,7 @@ const App: React.SFC<AppProps> = () => {
 		} catch {
 			dispatchStories({ type: "STORIES_FETCH_FAILURE" });
 		}
-	}, [url]);
+	}, [url, searchTerm]);
 
 	useEffect(() => {
 		handleFetchStories();

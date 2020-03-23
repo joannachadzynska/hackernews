@@ -1,28 +1,7 @@
-import React, { ReactNode } from "react";
-import styled from "styled-components";
+import React from "react";
+import { InputWithLabelProps } from "./types";
+import { StyledInput, StyledLabel } from "./style";
 
-const StyledLabel = styled.label`
-	border-top: 1px solid #171212;
-	border-left: 1px solid #171212;
-	font-size: 1.5rem;
-	padding-left: 5px;
-`;
-
-const StyledInput = styled.input`
-	border: none;
-	border-bottom: 1px solid #171212;
-	background-color: transparent;
-	font-size: 1.5rem;
-`;
-
-export interface InputWithLabelProps {
-	id: string;
-	value: string;
-	onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	type?: string;
-	children?: ReactNode;
-	isFocused?: boolean;
-}
 const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	id,
 	type = "text",

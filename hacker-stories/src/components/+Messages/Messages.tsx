@@ -1,8 +1,7 @@
 import * as React from "react";
+import { MessagesProps } from "./types";
 
-export interface MessagesProps {}
-
-const Messages: React.SFC<MessagesProps> = () => {
+const Messages: React.SFC<MessagesProps> = ({ message }) => {
 	return (
 		<div>
 			<h1>messages</h1>

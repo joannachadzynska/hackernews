@@ -1,8 +1,7 @@
 import React from "react";
+import { InputProps } from "./types";
 
-export interface InputProps {}
-
-const Input: React.SFC<InputProps> = () => {
+const Input: React.SFC<InputProps> = ({ children }) => {
 	return <div>input</div>;
 };
 
