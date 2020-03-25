@@ -142,8 +142,22 @@ const App = () => {
 	}, [urls]);
 
 	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+
 		handleFetchStories();
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, [handleFetchStories]);
+
+	useEffect(() => {
+		if (!stories.isLoading) return;
+		fetchMoreOnScroll();
+	}, [stories.isLoading]);
+
+	const fetchMoreOnScroll = () => {
+		setTimeout(() => {
+			handleMore();
+		}, 2000);
+	};
 
 	const handleRemoveStory = useCallback((item: Story) => {
 		dispatchStories({
@@ -175,9 +189,19 @@ const App = () => {
 	const handleMore = () => {
 		const lastUrl = urls[urls.length - 1];
 		const searchTerm = extractSearchTerm(lastUrl);
-		console.log(stories);
 
 		handleSearch(searchTerm, stories.page + 1);
+	};
+
+	const handleScroll = () => {
+		if (
+			window.innerHeight + document.documentElement.scrollTop !==
+			document.documentElement.offsetHeight
+		)
+			return;
+
+		console.log("Fetch more list items!");
+		handleMore();
 	};
 
 	const lastSearches = getLastSearches(urls);
