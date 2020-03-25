@@ -12,7 +12,6 @@ const useSemiPersistentState = (
 		if (!isMounted.current) {
 			isMounted.current = true;
 		} else {
-			console.log("A");
 			localStorage.setItem(key, value);
 		}
 	}, [value, key]);
