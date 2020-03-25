@@ -16,7 +16,7 @@ import { Story } from "./components/+List/types";
 import { StyledContainer, StyledHeadlinePrimary } from "./style";
 import LastSearches from "./components/+Searches";
 
-const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
+import { API_BASE, API_SEARCH, PARAM_SEARCH, PARAM_PAGE } from "./utils/api";
 
 export const storiesReducer = (state: StoriesState, action: StoriesAction) => {
 	switch (action.type) {
@@ -32,7 +32,11 @@ export const storiesReducer = (state: StoriesState, action: StoriesAction) => {
 				...state,
 				isLoading: false,
 				isError: false,
-				data: action.payload
+				data:
+					action.payload.page === 0
+						? action.payload.list
+						: state.data.concat(action.payload.list),
+				page: action.payload.page
 			};
 
 		case "STORIES_FETCH_FAILURE":
@@ -62,9 +66,13 @@ const getSumComments = (stories: any) => {
 	);
 };
 
-const getUrl = (searchTerm: any) => `${API_ENDPOINT}${searchTerm}`;
+const getUrl = (searchTerm: any, page: number) =>
+	`${API_BASE}${API_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`;
 
-const extractSearchTerm = (url: any) => url.replace(API_ENDPOINT, "");
+const extractSearchTerm = (url: any) =>
+	url
+		.substring(url.lastIndexOf("?") + 1, url.lastIndexOf("&"))
+		.replace(PARAM_SEARCH, "");
 
 const getLastSearches = (urls: any) =>
 	urls
@@ -104,10 +112,11 @@ const getLastSearches = (urls: any) =>
 const App = () => {
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
 
-	const [urls, setUrls] = useState([getUrl(searchTerm)]);
+	const [urls, setUrls] = useState([getUrl(searchTerm, 0)]);
 
 	const [stories, dispatchStories] = useReducer(storiesReducer, {
 		data: [],
+		page: 0,
 		isLoading: false,
 		isError: false
 	});
@@ -122,7 +131,10 @@ const App = () => {
 
 			dispatchStories({
 				type: "STORIES_FETCH_SUCCESS",
-				payload: result.data.hits
+				payload: {
+					list: result.data.hits,
+					page: result.data.page
+				}
 			});
 		} catch {
 			dispatchStories({ type: "STORIES_FETCH_FAILURE" });
@@ -146,18 +158,26 @@ const App = () => {
 
 	const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		handleSearch(searchTerm);
+		handleSearch(searchTerm, 0);
 		setSearchTerm("");
 	};
 
 	const handleLastSearch = (searchTerm: any) => {
 		setSearchTerm(searchTerm);
-		handleSearch(searchTerm);
+		handleSearch(searchTerm, 0);
 	};
 
-	const handleSearch = (searchTerm: any) => {
-		const url = getUrl(searchTerm);
+	const handleSearch = (searchTerm: any, page: number) => {
+		const url = getUrl(searchTerm, page);
 		setUrls(urls.concat(url));
+	};
+
+	const handleMore = () => {
+		const lastUrl = urls[urls.length - 1];
+		const searchTerm = extractSearchTerm(lastUrl);
+		console.log(stories);
+
+		handleSearch(searchTerm, stories.page + 1);
 	};
 
 	const lastSearches = getLastSearches(urls);
@@ -188,10 +208,13 @@ const App = () => {
 
 			{stories.isError && <p>Something went wrong ...</p>}
 
+			<List list={stories.data} onRemoveItem={handleRemoveStory} />
 			{stories.isLoading ? (
 				<p>Loading...</p>
 			) : (
-				<List list={stories.data} onRemoveItem={handleRemoveStory} />
+				<button type='button' onClick={handleMore}>
+					More
+				</button>
 			)}
 		</StyledContainer>
 	);

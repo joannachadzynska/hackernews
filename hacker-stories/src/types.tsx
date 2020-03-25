@@ -1,7 +1,8 @@
 import { Stories, Story } from "./components/+List/types";
 
 export type StoriesState = {
-	data: Stories;
+	data: Array<Story>;
+	page: any;
 	isLoading: boolean;
 	isError: boolean;
 };
@@ -12,7 +13,7 @@ interface StoriesFetchInitAction {
 
 interface StoriesFetchSuccessAction {
 	type: "STORIES_FETCH_SUCCESS";
-	payload: Stories;
+	payload: any;
 }
 
 interface StoriesFetchFailureAction {
