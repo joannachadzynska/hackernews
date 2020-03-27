@@ -1,6 +1,6 @@
 import styled from "styled-components";
 const StyledContainer = styled.div`
-	height: 100vw;
+	min-height: 100vw;
 	padding: 1.25rem;
 	background: #83a4d4;
 	background: linear-gradient(to left, #b6fbff, #83a4d4);

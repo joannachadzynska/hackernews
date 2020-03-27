@@ -30,7 +30,7 @@ const List: React.SFC<ListProps> = ({ list, onRemoveItem }) => {
 		: sortFunction(list);
 
 	return (
-		<div>
+		<div style={{ margin: "1rem 0" }}>
 			<StyledItem>
 				<StyledColumn width='40%'>
 					<StyledButtonSmall onClick={() => handleSort("TITLE")}>
@@ -48,8 +48,12 @@ const List: React.SFC<ListProps> = ({ list, onRemoveItem }) => {
 				</StyledColumn>
 				<StyledColumn width='10%'>Actions</StyledColumn>
 			</StyledItem>
-			{sortedList.map((item: any) => (
-				<ListItem key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
+			{sortedList.map((item: any, index: number) => (
+				<ListItem
+					key={item.objectID + index}
+					item={item}
+					onRemoveItem={onRemoveItem}
+				/>
 			))}
 		</div>
 	);

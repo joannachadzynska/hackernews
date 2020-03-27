@@ -1,4 +1,5 @@
 import React from "react";
+import { StyledButtonSmall } from "../shared/Button/style";
 
 export interface LastSearchesProps {
 	lastSearches: any;
@@ -10,17 +11,18 @@ const LastSearches: React.SFC<LastSearchesProps> = ({
 	onLastSearch
 }) => {
 	return (
-		<>
-			{" "}
+		<div style={{ margin: "1rem 0" }}>
+			<p>Last searches</p>
+			<br />
 			{lastSearches.map((searchTerm: any, index: number) => (
-				<button
+				<StyledButtonSmall
 					key={searchTerm + index}
 					type='button'
 					onClick={() => onLastSearch(searchTerm)}>
 					{searchTerm}
-				</button>
+				</StyledButtonSmall>
 			))}
-		</>
+		</div>
 	);
 };
 
