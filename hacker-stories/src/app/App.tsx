@@ -1,22 +1,22 @@
 import React, { useEffect, useCallback, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeStory, getStories } from "./features/stories/storiesSlice";
+import { removeStory, getStories } from "../features/stories/storiesSlice";
+
 // components
-// import { Counter } from "./features/counter/Counter";
-import { List, SearchForm } from "./components";
-import LastSearches from "./components/+Searches";
+import { List, SearchForm } from "../components";
+import LastSearches from "../components/+Searches";
 
 // utils
-import { getUrl, extractSearchTerm } from "./utils/api";
-import { getSumComments, getLastSearches } from "./utils/helpers";
-import useSemiPersistentState from "./customHooks/index";
+import { getUrl, extractSearchTerm } from "../utils/api";
+import { getSumComments, getLastSearches } from "../utils/helpers";
+import useSemiPersistentState from "../customHooks/index";
 
 // used types
-import { Story } from "./components/+List/types";
+import { Story } from "../components/+List/types";
 
 // styles
 import { StyledContainer, StyledHeadlinePrimary } from "./style";
-import { StyledButtonSmall } from "./components/shared/Button/style";
+import { StyledButtonSmall } from "../components/shared/Button/style";
 
 const App = () => {
 	const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
@@ -117,10 +117,6 @@ const App = () => {
 				lastSearches={lastSearches}
 				onLastSearch={handleLastSearch}
 			/>
-
-			{/* <header className='App-header'>
-				<Counter />
-			</header> */}
 			<hr />
 
 			{stories.isError && <p>Something went wrong ...</p>}

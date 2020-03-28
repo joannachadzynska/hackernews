@@ -2,29 +2,11 @@ import React from "react";
 import renderer from "react-test-renderer";
 import axios from "axios";
 
-// import { render } from "@testing-library/react";
-// import { Provider } from "react-redux";
-// import { store } from "./app/store";
 import App from "./App";
-import { List } from "./components";
+import { List } from "../components";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-// test suite
-// describe("something truthy", () => {
-// 	// test case
-// 	it("true to be true", () => {
-// 		// test assertion
-// 		expect(true).toBe(true);
-// 	});
-
-// 	// test case
-// 	it("false to be false", () => {
-// 		// assertion
-// 		expect(false).toBe(false);
-// 	});
-// });
 
 describe("App", () => {
 	it("succeeds fetching data with a list", async () => {

@@ -42,9 +42,6 @@ const storiesSlice = createSlice({
 			state.data = state.data.filter(
 				(story: any) => action.payload.objectID !== story.objectID
 			);
-		},
-		setCurrentPage(state, action) {
-			state.page = action.payload.page;
 		}
 	}
 });
@@ -53,7 +50,6 @@ export const {
 	getStoriesStart,
 	getStoriesSuccess,
 	getStoriesFailure,
-	setCurrentPage,
 	removeStory
 } = storiesSlice.actions;
 

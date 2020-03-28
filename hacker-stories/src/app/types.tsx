@@ -1,4 +1,4 @@
-import { Story } from "./components/+List/types";
+import { Story } from "../components/+List/types";
 
 export type StoriesState = {
 	data: Array<Story>;
