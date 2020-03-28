@@ -5,7 +5,7 @@ import { ListItemProps } from "./types";
 import { StyledItem, StyledColumn } from "./style";
 
 const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {
-	const { title, url, author, num_comments, points } = item;
+	const { title, url, author, num_comments, points, objectID } = item;
 	const handleRemoveItem = () => {
 		onRemoveItem(item);
 	};
@@ -19,8 +19,11 @@ const ListItem: React.SFC<ListItemProps> = ({ item, onRemoveItem }) => {
 			<StyledColumn width='10%'>{num_comments}</StyledColumn>
 			<StyledColumn width='10%'>{points}</StyledColumn>
 			<StyledColumn width='10%'>
-				<StyledButtonSmall onClick={handleRemoveItem} type='button'>
-					<Check height='18px' width='18px' />
+				<StyledButtonSmall
+					onClick={handleRemoveItem}
+					type='button'
+					aria-label='check remove icon'>
+					<Check height='18px' width='18px' id={objectID} />
 				</StyledButtonSmall>
 			</StyledColumn>
 		</StyledItem>
