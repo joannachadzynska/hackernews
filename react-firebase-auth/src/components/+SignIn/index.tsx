@@ -1,12 +1,19 @@
 import React from "react";
+import { FirebaseContext } from "../+Firebase";
 
 export interface SignInProps {}
 
 const SignIn: React.SFC<SignInProps> = () => {
 	return (
-		<div>
-			<h1>Sign In</h1>
-		</div>
+		<FirebaseContext.Consumer>
+			{(firebase) => {
+				return (
+					<div>
+						<h1>Sign In</h1>
+					</div>
+				);
+			}}
+		</FirebaseContext.Consumer>
 	);
 };
 
