@@ -48,12 +48,12 @@ class Firebase implements FirebaseInterface {
 		const snapShot = await userRef.get();
 
 		if (!snapShot.exists) {
-			const { username, email } = userAuth;
+			const { displayName, email } = userAuth;
 			const createdAt = new Date();
 
 			try {
 				await userRef.set({
-					username,
+					displayName,
 					email,
 					createdAt,
 					...additionalData
@@ -66,6 +66,7 @@ class Firebase implements FirebaseInterface {
 		return userRef;
 	};
 }
+
 // firebase.analytics();
 
 export default Firebase;
