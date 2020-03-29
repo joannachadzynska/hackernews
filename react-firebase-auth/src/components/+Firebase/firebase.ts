@@ -1,4 +1,5 @@
 import app from "firebase/app";
+import "firebase/auth";
 
 // Your web app's Firebase configuration
 const config = {
@@ -12,10 +13,29 @@ const config = {
 	measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
-class Firebase {
+interface FirebaseInterface {}
+
+class Firebase implements FirebaseInterface {
+	auth: any;
 	constructor() {
 		app.initializeApp(config);
+
+		this.auth = app.auth();
 	}
+
+	// *** AUTH API ***//
+	doCreateUserWithEmailAndPassword = (email: string, password: any) =>
+		this.auth.createUserWithEmailAndPassword(email, password);
+
+	doSignInWithEmailAndPassword = (email: string, password: any) =>
+		this.auth.signInWithEmailAndPassword(email, password);
+
+	doSignOut = () => this.auth.signOut();
+
+	doPasswordReset = (email: string) => this.auth.sendPasswordResetEmail(email);
+
+	doPasswordUpdate = (password: any) =>
+		this.auth.currentUser.updatePassword(password);
 }
 // firebase.analytics();
 
