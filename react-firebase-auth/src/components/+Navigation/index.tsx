@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
+import SignOut from "../+SignOut";
 
 export interface NavigationProps {}
 
@@ -22,6 +23,9 @@ const Navigation: React.SFC<NavigationProps> = () => {
 				</li>
 				<li>
 					<Link to={ROUTES.ADMIN}>Admin</Link>
+				</li>
+				<li>
+					<SignOut />
 				</li>
 			</ul>
 		</div>
