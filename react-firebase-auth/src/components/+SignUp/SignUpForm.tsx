@@ -10,7 +10,7 @@ export interface SignUpFormProps {
 }
 
 const initialState = {
-	username: "",
+	displayName: "",
 	email: "",
 	passwordOne: "",
 	passwordTwo: "",
@@ -20,13 +20,13 @@ const initialState = {
 const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 	const [state, setState] = useState(initialState);
 
-	const { username, email, passwordOne, passwordTwo, error } = state;
+	const { displayName, email, passwordOne, passwordTwo, error } = state;
 
 	const isInvalid =
 		passwordOne !== passwordTwo ||
 		passwordOne === "" ||
 		email === "" ||
-		username === "";
+		displayName === "";
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -36,7 +36,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 				email,
 				passwordOne
 			);
-			await firebase.createUserProfileDocument(user, { username });
+			await firebase.createUserProfileDocument(user, { displayName });
 			setState({ ...initialState });
 			history.push(ROUTES.HOME);
 		} catch (error) {
@@ -75,9 +75,9 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 		<form onSubmit={handleSubmit} noValidate>
 			<InputWithLabel
 				type='text'
-				value={username}
-				id={username}
-				name='username'
+				value={displayName}
+				id={displayName}
+				name='displayName'
 				onInputChange={handleChange}
 				placeholder='Full Name'>
 				Username

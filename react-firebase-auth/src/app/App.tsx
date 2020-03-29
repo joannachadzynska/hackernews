@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { FirebaseContext } from "../components/+Firebase";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
 	Navigation,
@@ -15,9 +16,27 @@ import * as ROUTES from "../constants/routes";
 import "./App.css";
 
 function App() {
+	const [authUser, setAuthUser] = useState(null);
+	const firebase = useContext(FirebaseContext);
+
+	useEffect(() => {
+		const listener = firebase.auth.onAuthStateChanged(async (authUser: any) => {
+			if (authUser) {
+				const userRef = await firebase.createUserProfileDocument(authUser);
+				userRef.onSnapshot((snapShot: any) => {
+					setAuthUser({ id: snapShot.id, ...snapShot.data() });
+				});
+			}
+
+			setAuthUser(authUser);
+		});
+
+		return () => listener();
+	}, []);
+
 	return (
 		<Router>
-			<Navigation />
+			<Navigation authUser={authUser} />
 
 			<hr />
 			<Switch>
@@ -34,7 +53,7 @@ function App() {
 					<PasswordForget />
 				</Route>
 				<Route path={ROUTES.HOME}>
-					<Home />
+					<Home authUser={authUser} />
 				</Route>
 				<Route path={ROUTES.ACCOUNT}>
 					<Account />

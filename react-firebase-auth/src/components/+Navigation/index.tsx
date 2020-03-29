@@ -1,35 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import * as ROUTES from "../../constants/routes";
-import SignOut from "../+SignOut";
 
-export interface NavigationProps {}
+import NavigationAuth from "./NavigationAuth";
+import NavigationNonAuth from "./NavigationNonAuth";
 
-const Navigation: React.SFC<NavigationProps> = () => {
-	return (
-		<div>
-			<ul>
-				<li>
-					<Link to={ROUTES.SIGN_IN}>Sign In</Link>
-				</li>
-				<li>
-					<Link to={ROUTES.LANDING}>Landing</Link>
-				</li>
-				<li>
-					<Link to={ROUTES.HOME}>Home</Link>
-				</li>
-				<li>
-					<Link to={ROUTES.ACCOUNT}>Account</Link>
-				</li>
-				<li>
-					<Link to={ROUTES.ADMIN}>Admin</Link>
-				</li>
-				<li>
-					<SignOut />
-				</li>
-			</ul>
-		</div>
-	);
+export interface NavigationProps {
+	authUser: any;
+}
+
+const Navigation: React.SFC<NavigationProps> = ({ authUser }) => {
+	return <div>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
 };
 
 export default Navigation;
