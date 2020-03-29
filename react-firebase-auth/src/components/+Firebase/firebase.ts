@@ -1,7 +1,9 @@
-import app from "firebase/app";
+import app, { firestore } from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 // Your web app's Firebase configuration
+
 const config = {
 	apiKey: process.env.REACT_APP_API_KEY,
 	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -17,10 +19,12 @@ interface FirebaseInterface {}
 
 class Firebase implements FirebaseInterface {
 	auth: any;
+	firestore: any;
 	constructor() {
 		app.initializeApp(config);
 
 		this.auth = app.auth();
+		this.firestore = app.firestore();
 	}
 
 	// *** AUTH API ***//
@@ -36,6 +40,31 @@ class Firebase implements FirebaseInterface {
 
 	doPasswordUpdate = (password: any) =>
 		this.auth.currentUser.updatePassword(password);
+
+	createUserProfileDocument = async (userAuth: any, additionalData: any) => {
+		if (!userAuth) return;
+
+		const userRef = this.firestore.doc(`users/${userAuth.uid}`);
+		const snapShot = await userRef.get();
+
+		if (!snapShot.exists) {
+			const { username, email } = userAuth;
+			const createdAt = new Date();
+
+			try {
+				await userRef.set({
+					username,
+					email,
+					createdAt,
+					...additionalData
+				});
+			} catch (error) {
+				console.log(`error creating user ${error.message}`);
+			}
+		}
+
+		return userRef;
+	};
 }
 // firebase.analytics();
 
