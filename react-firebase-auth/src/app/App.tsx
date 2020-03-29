@@ -24,7 +24,9 @@ function App() {
 				<Route exact path={ROUTES.LANDING}>
 					<LandingPage />
 				</Route>
-				<Route path={ROUTES.SIGN_UP} component={SignUp} />
+				<Route path={ROUTES.SIGN_UP}>
+					<SignUp />
+				</Route>
 				<Route path={ROUTES.SIGN_IN}>
 					<SignIn />
 				</Route>
