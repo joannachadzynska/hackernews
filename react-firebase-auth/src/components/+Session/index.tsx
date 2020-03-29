@@ -1,4 +1,5 @@
 import React from "react";
+import AuthUserContext from "./context";
 
 export interface SessionProps {}
 
@@ -11,3 +12,5 @@ const Session: React.SFC<SessionProps> = () => {
 };
 
 export default Session;
+
+export { AuthUserContext };

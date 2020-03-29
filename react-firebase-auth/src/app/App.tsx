@@ -11,6 +11,7 @@ import {
 	Account,
 	Admin
 } from "../components";
+import { AuthUserContext } from "../components/+Session";
 import * as ROUTES from "../constants/routes";
 // import { Counter } from "../features/counter/Counter";
 import "./App.css";
@@ -35,34 +36,36 @@ function App() {
 	}, []);
 
 	return (
-		<Router>
-			<Navigation authUser={authUser} />
+		<AuthUserContext.Provider value={authUser}>
+			<Router>
+				<Navigation authUser={authUser} />
 
-			<hr />
-			<Switch>
-				<Route exact path={ROUTES.LANDING}>
-					<LandingPage />
-				</Route>
-				<Route path={ROUTES.SIGN_UP}>
-					<SignUp />
-				</Route>
-				<Route path={ROUTES.SIGN_IN}>
-					<SignIn />
-				</Route>
-				<Route path={ROUTES.PASSWORD_FORGET}>
-					<PasswordForget />
-				</Route>
-				<Route path={ROUTES.HOME}>
-					<Home authUser={authUser} />
-				</Route>
-				<Route path={ROUTES.ACCOUNT}>
-					<Account />
-				</Route>
-				<Route path={ROUTES.ADMIN}>
-					<Admin />
-				</Route>
-			</Switch>
-		</Router>
+				<hr />
+				<Switch>
+					<Route exact path={ROUTES.LANDING}>
+						<LandingPage />
+					</Route>
+					<Route path={ROUTES.SIGN_UP}>
+						<SignUp />
+					</Route>
+					<Route path={ROUTES.SIGN_IN}>
+						<SignIn />
+					</Route>
+					<Route path={ROUTES.PASSWORD_FORGET}>
+						<PasswordForget />
+					</Route>
+					<Route path={ROUTES.HOME}>
+						<Home authUser={authUser} />
+					</Route>
+					<Route path={ROUTES.ACCOUNT}>
+						<Account />
+					</Route>
+					<Route path={ROUTES.ADMIN}>
+						<Admin />
+					</Route>
+				</Switch>
+			</Router>
+		</AuthUserContext.Provider>
 	);
 }
 
