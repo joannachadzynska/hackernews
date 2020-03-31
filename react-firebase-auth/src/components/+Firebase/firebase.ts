@@ -1,6 +1,7 @@
 import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/database";
 
 // Your web app's Firebase configuration
 
@@ -20,11 +21,13 @@ interface FirebaseInterface {}
 class Firebase implements FirebaseInterface {
 	auth: any;
 	firestore: any;
+	db: any;
 	constructor() {
 		app.initializeApp(config);
 
 		this.auth = app.auth();
 		this.firestore = app.firestore();
+		this.db = app.database();
 	}
 
 	// *** AUTH API ***//
@@ -61,6 +64,44 @@ class Firebase implements FirebaseInterface {
 			} catch (error) {
 				console.log(`error creating user ${error.message}`);
 			}
+		}
+
+		return userRef;
+	};
+
+	// *** USER API ***//
+	user = (uid: any) => this.db.ref(`users/${uid}`);
+	users = () => this.db.ref("users");
+	usersFirestore = () => this.firestore.collection("users");
+	convertCollectionsSnapshotToMap = (collections: any) => {
+		const transformedCollection = collections.docs.map((doc: any) => {
+			const data = doc.data();
+
+			return {
+				uid: doc.id,
+				data
+			};
+		});
+
+		return transformedCollection;
+	};
+
+	createProfileDocument = async (userAuth: any, data: any) => {
+		if (!userAuth) return;
+		const userRef = this.user(userAuth.uid);
+
+		const { displayName, email } = userAuth;
+		const createdAt = new Date();
+
+		try {
+			await userRef.set({
+				displayName,
+				email,
+				createdAt,
+				...data
+			});
+		} catch (error) {
+			console.log(`error creating user ${error.message}`);
 		}
 
 		return userRef;
