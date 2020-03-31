@@ -69,9 +69,35 @@ class Firebase implements FirebaseInterface {
 		return userRef;
 	};
 
+	// *** Merge Auth and DB User API *** //
+	onAuthUserListener = (next: any, fallback: any) =>
+		this.auth.onAuthStateChanged((authUser: any) => {
+			if (authUser) {
+				this.userFirestore(authUser.uid).onSnapshot((snapshot: any) => {
+					const dbUser = snapshot.data();
+
+					if (!dbUser.roles) {
+						dbUser.roles = {};
+					}
+
+					authUser = {
+						uid: authUser.uid,
+						email: authUser.email,
+						...dbUser
+					};
+
+					next(authUser);
+				});
+			} else {
+				fallback();
+			}
+		});
+
 	// *** USER API ***//
 	user = (uid: any) => this.db.ref(`users/${uid}`);
 	users = () => this.db.ref("users");
+	userFirestore = (uid: any) =>
+		this.firestore.collection("users").doc(`${uid}`);
 	usersFirestore = () => this.firestore.collection("users");
 	convertCollectionsSnapshotToMap = (collections: any) => {
 		const transformedCollection = collections.docs.map((doc: any) => {
@@ -84,27 +110,6 @@ class Firebase implements FirebaseInterface {
 		});
 
 		return transformedCollection;
-	};
-
-	createProfileDocument = async (userAuth: any, data: any) => {
-		if (!userAuth) return;
-		const userRef = this.user(userAuth.uid);
-
-		const { displayName, email } = userAuth;
-		const createdAt = new Date();
-
-		try {
-			await userRef.set({
-				displayName,
-				email,
-				createdAt,
-				...data
-			});
-		} catch (error) {
-			console.log(`error creating user ${error.message}`);
-		}
-
-		return userRef;
 	};
 }
 
