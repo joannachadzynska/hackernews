@@ -13,6 +13,8 @@ const Account: React.SFC<AccountProps> = ({ authUser }) => {
 	const firebase = React.useContext(FirebaseContext);
 	const history = useHistory();
 
+	console.log("C: Account");
+
 	React.useEffect(() => {
 		const listener = firebase.auth.onAuthStateChanged((authUser: any) => {
 			if (!authUser) {

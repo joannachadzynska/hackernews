@@ -1,16 +1,6 @@
-import React from "react";
-import AuthUserContext from "./context";
+import * as React from "react";
 
-export interface SessionProps {}
+export const AuthUserContext = React.createContext(null);
 
-const Session: React.SFC<SessionProps> = () => {
-	return (
-		<div>
-			<h1>Session</h1>
-		</div>
-	);
-};
-
-export default Session;
-
-export { AuthUserContext };
+// import withAuthentication from "./withAuthentication";
+// import withAuthorization from "./withAuthorization";

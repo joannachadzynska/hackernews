@@ -20,7 +20,11 @@ function App() {
 	const [authUser, setAuthUser] = useState(null);
 	const firebase = useContext(FirebaseContext);
 
+	console.log("A: App");
+
 	useEffect(() => {
+		console.log("A: effect one");
+
 		const listener = firebase.auth.onAuthStateChanged(async (authUser: any) => {
 			if (authUser) {
 				const userRef = await firebase.createUserProfileDocument(authUser);
@@ -33,7 +37,21 @@ function App() {
 		});
 
 		return () => listener();
-	}, []);
+	}, [firebase]);
+
+	useEffect(() => {
+		console.log("A: effect two");
+		const listen = firebase.onAuthUserListener(
+			(authUser: any) => {
+				setAuthUser(authUser);
+			},
+			() => {
+				setAuthUser(null);
+			}
+		);
+
+		return () => listen();
+	}, [firebase]);
 
 	return (
 		<AuthUserContext.Provider value={authUser}>
@@ -61,7 +79,7 @@ function App() {
 						<Account authUser={authUser} />
 					</Route>
 					<Route path={ROUTES.ADMIN}>
-						<Admin />
+						<Admin authUser={authUser} />
 					</Route>
 				</Switch>
 			</Router>
@@ -69,4 +87,4 @@ function App() {
 	);
 }
 
-export default App;
+export default React.memo(App);
