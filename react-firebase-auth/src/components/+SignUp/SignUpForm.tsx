@@ -36,7 +36,12 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 				email,
 				passwordOne
 			);
-			await firebase.createUserProfileDocument(user, { displayName });
+			await firebase.createUserProfileDocument(user, { displayName, email });
+			// await firebase.user(user.uid).set({
+			// 	displayName,
+			// 	email
+			// });
+			// await firebase.createProfileDocument(user, { displayName });
 			setState({ ...initialState });
 			history.push(ROUTES.HOME);
 		} catch (error) {
