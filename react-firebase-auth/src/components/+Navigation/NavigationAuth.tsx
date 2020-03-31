@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
+import * as ROLES from "../../constants/roles";
 import SignOut from "../+SignOut";
+import { StyledNavList } from "./style";
 
-export interface NavigationAuthProps {}
+export interface NavigationAuthProps {
+	authUser: any;
+}
 
-const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
+const NavigationAuth: React.SFC<NavigationAuthProps> = ({ authUser }) => {
 	return (
-		<ul>
+		<StyledNavList>
 			<li>
 				<Link to={ROUTES.LANDING}>Landing</Link>
 			</li>
@@ -17,13 +21,17 @@ const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
 			<li>
 				<Link to={ROUTES.ACCOUNT}>Account</Link>
 			</li>
-			<li>
-				<Link to={ROUTES.ADMIN}>Admin</Link>
-			</li>
+
+			{authUser.roles !== undefined && !!authUser.roles[ROLES.ADMIN] && (
+				<li>
+					<Link to={ROUTES.ADMIN}>Admin</Link>
+				</li>
+			)}
+
 			<li>
 				<SignOut />
 			</li>
-		</ul>
+		</StyledNavList>
 	);
 };
 
