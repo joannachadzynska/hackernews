@@ -20,6 +20,7 @@ const Home: React.SFC<HomeProps> = ({ authUser }) => {
 
 		return () => listener();
 	}, []);
+	console.log(authUser);
 
 	return (
 		<div>
