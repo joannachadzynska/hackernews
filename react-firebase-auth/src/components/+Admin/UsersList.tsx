@@ -1,29 +1,19 @@
 import React from "react";
+import User from "./User";
+import { StyledList } from "./style";
 
 export interface UsersListProps {
 	users: any;
 }
 
-const UsersList: React.SFC<UsersListProps> = ({ users }) => {
-	console.log(users);
-
+const UsersList: React.SFC<UsersListProps> = React.memo(({ users }) => {
 	return (
-		<ul>
+		<StyledList>
 			{users.map((user: any) => (
-				<li key={user.uid}>
-					<span>
-						<strong>ID:</strong> {user.uid}
-					</span>
-					<span>
-						<strong>E-Mail:</strong> {user.data.email}
-					</span>
-					<span>
-						<strong>Username:</strong> {user.data.displayName}
-					</span>
-				</li>
+				<User key={user.uid} user={user} />
 			))}
-		</ul>
+		</StyledList>
 	);
-};
+});
 
 export default UsersList;
