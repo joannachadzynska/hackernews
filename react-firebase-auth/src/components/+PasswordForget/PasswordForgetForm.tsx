@@ -52,7 +52,9 @@ const PasswordForgetForm: React.SFC<PasswordForgetFormProps> = ({
 				Email
 			</InputWithLabel>
 
-			<Button disabled={isInvalid}>Reset My Password</Button>
+			<Button disabled={isInvalid} type='submit'>
+				Reset My Password
+			</Button>
 			{error && <p>{error}</p>}
 		</form>
 	);
