@@ -58,7 +58,7 @@ function App() {
 						<Home authUser={authUser} />
 					</Route>
 					<Route path={ROUTES.ACCOUNT}>
-						<Account />
+						<Account authUser={authUser} />
 					</Route>
 					<Route path={ROUTES.ADMIN}>
 						<Admin />
