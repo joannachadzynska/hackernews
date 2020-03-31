@@ -45,18 +45,6 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 				error: error.message
 			});
 		}
-		// .then((authUser: any) => {
-		// 	setState({ ...initialState });
-		// 	console.log(authUser);
-
-		// 	history.push(ROUTES.HOME);
-		// })
-		// .catch((error: any) => {
-		// 	setState({
-		// 		...state,
-		// 		error
-		// 	});
-		// });
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
