@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
 import SignInForm from "./SignInForm";
 import SignUpLink from "../+SignUp/SignUpLink";
+import PasswordForgetLink from "../+PasswordForget/PasswordForgetLink";
 
 export interface SignInProps {}
 
@@ -13,6 +14,7 @@ const SignIn: React.SFC<SignInProps> = () => {
 		<div>
 			<h1>Sign In</h1>
 			<SignInForm firebase={firebase} history={history} />
+			<PasswordForgetLink />
 			<SignUpLink />
 		</div>
 	);
