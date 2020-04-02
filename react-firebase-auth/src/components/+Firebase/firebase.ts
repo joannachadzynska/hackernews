@@ -24,6 +24,7 @@ class Firebase implements FirebaseInterface {
 	db: any;
 	googleProvider: any;
 	facebookProvider: any;
+	twitterProvider: any;
 	constructor() {
 		app.initializeApp(config);
 
@@ -34,6 +35,11 @@ class Firebase implements FirebaseInterface {
 			{ prompt: "select_account" }
 		);
 		this.facebookProvider = new app.auth.FacebookAuthProvider().setCustomParameters(
+			{
+				display: "popup"
+			}
+		);
+		this.twitterProvider = new app.auth.TwitterAuthProvider().setCustomParameters(
 			{
 				display: "popup"
 			}
@@ -50,6 +56,8 @@ class Firebase implements FirebaseInterface {
 	doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider);
 
 	doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
+
+	doSignInWithTwitter = () => this.auth.signInWithPopup(this.twitterProvider);
 
 	doSignOut = () => this.auth.signOut();
 
