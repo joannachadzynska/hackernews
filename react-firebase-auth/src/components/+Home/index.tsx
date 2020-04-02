@@ -1,18 +1,16 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
+import { AuthUserContext } from "../+Session";
 import * as ROUTES from "../../constants/routes";
 
-export interface HomeProps {
-	authUser: any;
-}
+export interface HomeProps {}
 
-const Home: React.SFC<HomeProps> = ({ authUser }) => {
+const Home: React.SFC<HomeProps> = () => {
 	const firebase = React.useContext(FirebaseContext);
 	const history = useHistory();
+	const authUser: any = React.useContext(AuthUserContext);
 	const condition = (authUser: any) => !!authUser;
-
-	console.log("D: Home");
 
 	React.useEffect(() => {
 		const listener = firebase.auth.onAuthStateChanged((authUser: any) => {

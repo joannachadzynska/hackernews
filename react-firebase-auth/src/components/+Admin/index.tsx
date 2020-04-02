@@ -1,18 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
+import { AuthUserContext } from "../+Session";
 import UsersList from "./UsersList";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
 
-export interface AdminProps {
-	authUser: any;
-}
+export interface AdminProps {}
 
-const Admin: React.SFC<AdminProps> = ({ authUser }) => {
-	console.log("E: Admin");
-
+const Admin: React.SFC<AdminProps> = () => {
 	const firebase = useContext(FirebaseContext);
+	const authUser: any = useContext(AuthUserContext);
 	const [state, setState] = useState({
 		loading: false,
 		users: []
@@ -24,13 +22,6 @@ const Admin: React.SFC<AdminProps> = ({ authUser }) => {
 			...state,
 			loading: true
 		});
-
-		// firebase.users().on("value", (snapshot: any) => {
-		// 	setState({
-		// 		users: snapshot.val(),
-		// 		loading: false
-		// 	});
-		// });
 
 		const usersCollectionRef = firebase
 			.usersFirestore()

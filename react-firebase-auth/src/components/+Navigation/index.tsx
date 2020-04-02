@@ -7,8 +7,6 @@ export interface NavigationProps {
 }
 
 const Navigation: React.SFC<NavigationProps> = ({ authUser }) => {
-	console.log("B: Navigation");
-
 	return (
 		<div>
 			{authUser ? (
