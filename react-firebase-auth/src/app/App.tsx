@@ -11,47 +11,36 @@ import {
 	Account,
 	Admin
 } from "../components";
+import useSemiPersistentState from "../customHooks/SemiPersistentState";
 import { AuthUserContext } from "../components/+Session";
 import * as ROUTES from "../constants/routes";
 // import { Counter } from "../features/counter/Counter";
 import "./App.css";
 
-function App() {
-	const [authUser, setAuthUser] = useState(null);
+const App = () => {
+	const [authUser, setAuthUser] = useSemiPersistentState("authUser", null);
 	const firebase = useContext(FirebaseContext);
 
-	console.log("A: App");
-
 	useEffect(() => {
-		console.log("A: effect one");
-
-		const listener = firebase.auth.onAuthStateChanged(async (authUser: any) => {
-			if (authUser) {
-				const userRef = await firebase.createUserProfileDocument(authUser);
-				userRef.onSnapshot((snapShot: any) => {
-					setAuthUser({ id: snapShot.id, ...snapShot.data() });
-				});
-			}
-
-			setAuthUser(authUser);
-		});
-
-		return () => listener();
-	}, [firebase]);
-
-	useEffect(() => {
-		console.log("A: effect two");
-		const listen = firebase.onAuthUserListener(
-			(authUser: any) => {
+		const listener = firebase.onAuthUserListener(
+			async (authUser: any) => {
+				if (authUser) {
+					const userRef = await firebase.createUserProfileDocument(authUser);
+					userRef.onSnapshot((snapShot: any) => {
+						setAuthUser({ id: snapShot.id, ...snapShot.data() });
+					});
+				}
+				// localStorage.setItem("authUser", JSON.stringify(authUser));
 				setAuthUser(authUser);
 			},
 			() => {
-				setAuthUser(null);
+				setAuthUser("");
+				localStorage.removeItem("authUser");
 			}
 		);
 
-		return () => listen();
-	}, [firebase]);
+		return () => listener();
+	}, [firebase, setAuthUser]);
 
 	return (
 		<AuthUserContext.Provider value={authUser}>
@@ -73,18 +62,18 @@ function App() {
 						<PasswordForget />
 					</Route>
 					<Route path={ROUTES.HOME}>
-						<Home authUser={authUser} />
+						<Home />
 					</Route>
 					<Route path={ROUTES.ACCOUNT}>
-						<Account authUser={authUser} />
+						<Account />
 					</Route>
 					<Route path={ROUTES.ADMIN}>
-						<Admin authUser={authUser} />
+						<Admin />
 					</Route>
 				</Switch>
 			</Router>
 		</AuthUserContext.Provider>
 	);
-}
+};
 
 export default React.memo(App);
