@@ -23,6 +23,7 @@ class Firebase implements FirebaseInterface {
 	firestore: any;
 	db: any;
 	googleProvider: any;
+	facebookProvider: any;
 	constructor() {
 		app.initializeApp(config);
 
@@ -32,6 +33,7 @@ class Firebase implements FirebaseInterface {
 		this.googleProvider = new app.auth.GoogleAuthProvider().setCustomParameters(
 			{ prompt: "select_account" }
 		);
+		this.facebookProvider = new app.auth.FacebookAuthProvider();
 	}
 
 	// *** AUTH API ***//
@@ -42,6 +44,8 @@ class Firebase implements FirebaseInterface {
 		this.auth.signInWithEmailAndPassword(email, password);
 
 	doSignInWithGoogle = () => this.auth.signInWithPopup(this.googleProvider);
+
+	doSignInWithFacebook = () => this.auth.signInWithPopup(this.facebookProvider);
 
 	doSignOut = () => this.auth.signOut();
 
@@ -101,10 +105,14 @@ class Firebase implements FirebaseInterface {
 
 	// *** USER API ***//
 	user = (uid: any) => this.db.ref(`users/${uid}`);
+
 	users = () => this.db.ref("users");
+
 	userFirestore = (uid: any) =>
 		this.firestore.collection("users").doc(`${uid}`);
+
 	usersFirestore = () => this.firestore.collection("users");
+
 	convertCollectionsSnapshotToMap = (collections: any) => {
 		const transformedCollection = collections.docs.map((doc: any) => {
 			const data = doc.data();
