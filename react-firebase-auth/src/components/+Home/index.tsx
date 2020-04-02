@@ -13,23 +13,13 @@ const Home: React.SFC<HomeProps> = () => {
 	const condition = (authUser: any) => !!authUser;
 
 	React.useEffect(() => {
-		const listener = firebase.auth.onAuthStateChanged((authUser: any) => {
-			if (!authUser) {
-				history.push(ROUTES.SIGN_IN);
-			}
-		});
-
-		return () => listener();
-	}, []);
-
-	React.useEffect(() => {
 		const listen = firebase.onAuthUserListener((authUser: any) => {
 			if (!condition(authUser)) {
 				history.push(ROUTES.SIGN_IN);
 			}
 		});
 		return () => listen();
-	}, []);
+	}, [firebase, history]);
 
 	return (
 		<div>

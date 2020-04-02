@@ -21,7 +21,7 @@ const Account: React.SFC<AccountProps> = () => {
 		});
 
 		return () => listener();
-	}, []);
+	}, [firebase, history]);
 
 	return (
 		<div>

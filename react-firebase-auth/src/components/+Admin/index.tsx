@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
+// import { AuthUserContext } from "../+Session";
 import UsersList from "./UsersList";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
@@ -10,7 +10,7 @@ export interface AdminProps {}
 
 const Admin: React.SFC<AdminProps> = () => {
 	const firebase = useContext(FirebaseContext);
-	const authUser: any = useContext(AuthUserContext);
+	// const authUser: any = useContext(AuthUserContext);
 	const [state, setState] = useState({
 		loading: false,
 		users: []
@@ -33,7 +33,7 @@ const Admin: React.SFC<AdminProps> = () => {
 			});
 
 		return () => usersCollectionRef();
-	}, []);
+	}, [firebase, state]);
 
 	const condition = (authUser: any) =>
 		authUser && !!authUser.roles[ROLES.ADMIN];
@@ -48,7 +48,7 @@ const Admin: React.SFC<AdminProps> = () => {
 			() => history.push(ROUTES.SIGN_IN)
 		);
 		return () => listen();
-	}, []);
+	}, [firebase, history]);
 
 	return (
 		<div>
