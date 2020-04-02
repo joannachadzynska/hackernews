@@ -5,6 +5,7 @@ export interface ButtonProps {
 	type?: any;
 	disabled?: boolean;
 	onClick?: any;
+	onSubmit?: any;
 }
 
 const Button: React.SFC<ButtonProps> = ({ children, ...shared }) => {
