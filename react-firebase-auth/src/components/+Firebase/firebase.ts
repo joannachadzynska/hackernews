@@ -33,7 +33,11 @@ class Firebase implements FirebaseInterface {
 		this.googleProvider = new app.auth.GoogleAuthProvider().setCustomParameters(
 			{ prompt: "select_account" }
 		);
-		this.facebookProvider = new app.auth.FacebookAuthProvider();
+		this.facebookProvider = new app.auth.FacebookAuthProvider().setCustomParameters(
+			{
+				display: "popup"
+			}
+		);
 	}
 
 	// *** AUTH API ***//

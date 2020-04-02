@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
 import { Button } from "../shared";
 
-export interface SignInWithGoogleProps {
+export interface SignInWithFacebookProps {
 	firebase: any;
 	history: any;
 }
 
-const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
+const SignInWithFacebook: React.SFC<SignInWithFacebookProps> = ({
 	firebase,
 	history
 }) => {
@@ -15,8 +15,9 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
 		firebase
-			.doSignInWithGoogle()
+			.doSignInWithFacebook()
 			.then((user: any) => {
 				firebase.createUserProfileDocument(user.user, { roles: {} });
 				setError(null);
@@ -29,10 +30,10 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Button type='submit'>Sign In with Google</Button>
+			<Button type='submit'>Sign In with Facebook</Button>
 			{error && <p>{error}</p>}
 		</form>
 	);
 };
 
-export default SignInWithGoogle;
+export default SignInWithFacebook;

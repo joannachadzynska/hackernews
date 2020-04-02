@@ -5,6 +5,7 @@ import SignInForm from "./SignInForm";
 import SignUpLink from "../+SignUp/SignUpLink";
 import PasswordForgetLink from "../+PasswordForget/PasswordForgetLink";
 import SignInWithGoogle from "./SignInWithGoogle";
+import SignInWithFacebook from "./SignInWithFacebook";
 
 export interface SignInProps {}
 
@@ -16,6 +17,7 @@ const SignIn: React.SFC<SignInProps> = () => {
 			<h1>Sign In</h1>
 			<SignInForm firebase={firebase} history={history} />
 			<SignInWithGoogle firebase={firebase} history={history} />
+			<SignInWithFacebook firebase={firebase} history={history} />
 			<PasswordForgetLink />
 			<SignUpLink />
 		</div>
