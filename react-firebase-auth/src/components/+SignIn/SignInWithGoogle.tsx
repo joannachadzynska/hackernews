@@ -5,13 +5,16 @@ import { Button } from "../shared";
 export interface SignInWithGoogleProps {
 	firebase: any;
 	history: any;
+	errorCodes: any;
 }
 
 const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 	firebase,
-	history
+	history,
+	errorCodes
 }) => {
 	const [error, setError] = useState(null);
+	console.log(errorCodes.ERROR_CODE_ACCOUNT_EXISTS);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -23,6 +26,9 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 				history.push(ROUTES.HOME);
 			})
 			.catch((error: any) => {
+				if (error.code === "ERROR_CODE_ACCOUNT_EXISTS") {
+					error.message = errorCodes.ERROR_MSG_ACCOUNT_EXISTS;
+				}
 				setError(error.message);
 			});
 	};

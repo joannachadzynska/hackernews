@@ -5,6 +5,7 @@ import { AuthUserContext } from "../+Session";
 import * as ROUTES from "../../constants/routes";
 import PasswordForgetForm from "../+PasswordForget/PasswordForgetForm";
 import PasswordChangeForm from "../+PasswordChange/PasswordChangeForm";
+import LoginManagement from "./LoginManagement";
 
 export interface AccountProps {}
 
@@ -29,6 +30,7 @@ const Account: React.SFC<AccountProps> = () => {
 
 			<PasswordForgetForm firebase={firebase} />
 			<PasswordChangeForm firebase={firebase} />
+			<LoginManagement />
 		</div>
 	);
 };

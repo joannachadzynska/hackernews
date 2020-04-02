@@ -6,6 +6,7 @@ import { Button, InputWithLabel } from "../shared";
 export interface SignUpFormProps {
 	firebase: any;
 	history: any;
+	errorCodes: any;
 }
 
 const initialState = {
@@ -17,7 +18,11 @@ const initialState = {
 	error: ""
 };
 
-const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
+const SignUpForm: React.SFC<SignUpFormProps> = ({
+	firebase,
+	history,
+	errorCodes
+}) => {
 	const [state, setState] = useState(initialState);
 
 	const {
@@ -52,14 +57,12 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ firebase, history }) => {
 				email,
 				roles
 			});
-			// await firebase.user(user.uid).set({
-			// 	displayName,
-			// 	email
-			// });
-			// await firebase.createProfileDocument(user, { displayName });
 			setState({ ...initialState });
 			history.push(ROUTES.HOME);
 		} catch (error) {
+			if (error.code === "ERROR_CODE_ACCOUNT_EXISTS") {
+				error.message = errorCodes.ERROR_CODE_ACCOUNT_EXISTS;
+			}
 			setState({
 				...state,
 				error: error.message
