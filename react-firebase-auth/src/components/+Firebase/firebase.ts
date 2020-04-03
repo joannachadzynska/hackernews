@@ -25,8 +25,10 @@ class Firebase implements FirebaseInterface {
 	googleProvider: any;
 	facebookProvider: any;
 	twitterProvider: any;
+	emailAuthProvider: any;
 	constructor() {
 		app.initializeApp(config);
+		this.emailAuthProvider = app.auth.EmailAuthProvider;
 
 		this.auth = app.auth();
 		this.firestore = app.firestore();

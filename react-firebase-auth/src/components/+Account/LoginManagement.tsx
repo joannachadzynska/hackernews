@@ -1,9 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import { FirebaseContext } from "../+Firebase";
 import { AuthUserContext } from "../+Session";
 import { Button } from "../shared";
+import DefaultLoginToggle from "./DefaultLoginToggle";
+import SocialLoginToggle from "./SocialLoginToggle";
 
-export interface LoginManagementProps {}
+export interface LoginManagementProps {
+	authUser: any;
+}
 
 const SIGN_IN_METHODS = [
 	{
@@ -24,38 +28,90 @@ const SIGN_IN_METHODS = [
 	}
 ];
 
-const LoginManagement: React.SFC<LoginManagementProps> = () => {
+const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 	const firebase = useContext(FirebaseContext);
-	const authUser: any = useContext(AuthUserContext);
+	const [user, setUser] = React.useState(null);
+
 	const [state, setState] = useState({
 		activeSignInMethods: [],
 		error: null
 	});
 
-	console.log(authUser.email);
-	const email = authUser.email !== null ? authUser.email : "nic";
+	const fetchSignInMethods = useCallback(() => {
+		const email = authUser.email !== undefined ? authUser.email : "";
+
+		firebase.auth
+			.fetchSignInMethodsForEmail(email)
+			.then((activeSignInMethods: any) =>
+				setState({ activeSignInMethods, error: null })
+			)
+			.catch((error: any) => setState({ ...state, error: error.message }));
+	}, [authUser.email]);
+
 	useEffect(() => {
-		// const listener = firebase.auth
-		// 	.fetchSignInMethodsForEmail(email)
-		// 	.then((activeSignInMethods: any) =>
-		// 		setState({ activeSignInMethods, error: null })
-		// 	)
-		// 	.catch((error: any) => setState({ ...state, error: error.message }));
-		// return () => listener();
-	}, []);
+		// setUser(authUser);
+		fetchSignInMethods();
+	}, [fetchSignInMethods]);
+
+	const onSocialLoginLink = (provider: any) => {
+		console.log(provider);
+		firebase.auth.currentUser
+			.linkWithPopup(firebase[provider])
+			.then(fetchSignInMethods)
+			.catch((err: any) => setState({ ...state, error: err.message }));
+	};
+
+	const onUnLink = (providerId: any) => {
+		console.log(providerId);
+		firebase.auth.currentUser
+			.unLink(providerId)
+			.then(fetchSignInMethods)
+			.catch((err: any) => setState({ ...state, error: err.message }));
+	};
+
+	const onDefaultLoginLink = (password: any) => {
+		const credential = firebase.emailAuthProvider.credential(
+			authUser.email,
+			password
+		);
+
+		firebase.auth.currentUser
+			.linkAndRetrieveDataWithCredential(credential)
+			.then(fetchSignInMethods)
+			.catch((err: any) => setState({ ...state, error: err.message }));
+	};
+
 	return (
 		<div>
+			<h1>Login Management</h1>
 			Sign In Methods:
 			<ul>
 				{SIGN_IN_METHODS.map((method: any) => {
-					console.log(method.id);
+					const onlyOneLeft = state.activeSignInMethods.length === 1;
 
-					// const isEnabled = state.activeSignInMethods.includes(method.id);
+					const isEnabled = state.activeSignInMethods.some(
+						(el: any) => el === method.id
+					);
+
 					return (
 						<li key={method.id}>
-							<Button type='button' onClick={() => {}}>
-								{method.id}
-							</Button>
+							{method.id === "password" ? (
+								<DefaultLoginToggle
+									onlyOneLeft={onlyOneLeft}
+									isEnabled={isEnabled}
+									signInMethod={method}
+									onLink={onDefaultLoginLink}
+									onUnLink={onUnLink}
+								/>
+							) : (
+								<SocialLoginToggle
+									onlyOneLeft={onlyOneLeft}
+									isEnabled={isEnabled}
+									signInMethod={method}
+									onLink={onSocialLoginLink}
+									onUnLink={onUnLink}
+								/>
+							)}
 						</li>
 					);
 				})}
