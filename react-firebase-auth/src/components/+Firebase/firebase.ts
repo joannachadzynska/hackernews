@@ -69,10 +69,7 @@ class Firebase implements FirebaseInterface {
 	doPasswordUpdate = (password: any) =>
 		this.auth.currentUser.updatePassword(password);
 
-	doSendEmailVerification = () =>
-		this.auth.currentUser.sendEmailVerification({
-			url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT
-		});
+	doSendEmailVerification = () => this.auth.currentUser.sendEmailVerification();
 
 	createUserProfileDocument = async (userAuth: any, additionalData: any) => {
 		if (!userAuth) return;
@@ -83,6 +80,7 @@ class Firebase implements FirebaseInterface {
 		if (!snapShot.exists) {
 			const { displayName, email } = userAuth;
 			const createdAt = new Date();
+			console.log(additionalData);
 
 			try {
 				await userRef.set({
@@ -106,13 +104,15 @@ class Firebase implements FirebaseInterface {
 				this.userFirestore(authUser.uid).onSnapshot((snapshot: any) => {
 					const dbUser = snapshot.data();
 
-					if (!dbUser.roles) {
-						dbUser.roles = {};
-					}
+					// if (!dbUser.roles) {
+					// 	dbUser.roles = {};
+					// }
 
 					authUser = {
 						uid: authUser.uid,
 						email: authUser.email,
+						emailVerified: authUser.emailVerified,
+						providerData: authUser.providerData,
 						...dbUser
 					};
 
@@ -132,6 +132,8 @@ class Firebase implements FirebaseInterface {
 		this.firestore.collection("users").doc(`${uid}`);
 
 	usersFirestore = () => this.firestore.collection("users");
+
+	userRef = (userAuth: any) => this.firestore.doc(`users/${userAuth.uid}`);
 
 	convertCollectionsSnapshotToMap = (collections: any) => {
 		const transformedCollection = collections.docs.map((doc: any) => {
