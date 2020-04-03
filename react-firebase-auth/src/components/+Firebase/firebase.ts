@@ -26,10 +26,11 @@ class Firebase implements FirebaseInterface {
 	facebookProvider: any;
 	twitterProvider: any;
 	emailAuthProvider: any;
+
 	constructor() {
 		app.initializeApp(config);
-		this.emailAuthProvider = app.auth.EmailAuthProvider;
 
+		this.emailAuthProvider = app.auth.EmailAuthProvider;
 		this.auth = app.auth();
 		this.firestore = app.firestore();
 		this.db = app.database();
@@ -67,6 +68,11 @@ class Firebase implements FirebaseInterface {
 
 	doPasswordUpdate = (password: any) =>
 		this.auth.currentUser.updatePassword(password);
+
+	doSendEmailVerification = () =>
+		this.auth.currentUser.sendEmailVerification({
+			url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT
+		});
 
 	createUserProfileDocument = async (userAuth: any, additionalData: any) => {
 		if (!userAuth) return;
