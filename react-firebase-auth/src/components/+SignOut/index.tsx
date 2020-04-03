@@ -9,6 +9,7 @@ export interface SignOutProps {}
 const SignOut: React.SFC<SignOutProps> = () => {
 	const firebase = useContext(FirebaseContext);
 	const history = useHistory();
+
 	return (
 		<Button
 			type='button'

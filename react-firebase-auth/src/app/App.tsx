@@ -14,7 +14,6 @@ import {
 import useSemiPersistentState from "../customHooks/SemiPersistentState";
 import { AuthUserContext } from "../components/+Session";
 import * as ROUTES from "../constants/routes";
-// import { Counter } from "../features/counter/Counter";
 import "./App.css";
 
 const App = () => {
@@ -23,12 +22,15 @@ const App = () => {
 
 	useEffect(() => {
 		const listener = firebase.onAuthUserListener(
-			async (authUser: any) => {
+			(authUser: any) => {
 				if (authUser) {
-					const userRef = await firebase.createUserProfileDocument(authUser);
-					userRef.onSnapshot((snapShot: any) => {
-						setAuthUser({ id: snapShot.id, ...snapShot.data() });
+					const displayName = authUser.displayName;
+					firebase.createUserProfileDocument(authUser, {
+						displayName
 					});
+					// userRef.onSnapshot((snapShot: any) => {
+					// 	setAuthUser({ id: snapShot.id, ...snapShot.data() });
+					// });
 				}
 				// localStorage.setItem("authUser", JSON.stringify(authUser));
 				setAuthUser(authUser);
@@ -76,4 +78,4 @@ const App = () => {
 	);
 };
 
-export default React.memo(App);
+export default App;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, InputWithLabel } from "../shared";
-import { format } from "path";
 
 export interface DefaultLoginToggleProps {
 	onlyOneLeft: boolean;

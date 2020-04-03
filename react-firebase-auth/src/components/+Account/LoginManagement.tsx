@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
-import { Button } from "../shared";
 import DefaultLoginToggle from "./DefaultLoginToggle";
 import SocialLoginToggle from "./SocialLoginToggle";
 
@@ -30,7 +28,6 @@ const SIGN_IN_METHODS = [
 
 const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 	const firebase = useContext(FirebaseContext);
-	const [user, setUser] = React.useState(null);
 
 	const [state, setState] = useState({
 		activeSignInMethods: [],
@@ -54,7 +51,6 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 	}, [fetchSignInMethods]);
 
 	const onSocialLoginLink = (provider: any) => {
-		console.log(provider);
 		firebase.auth.currentUser
 			.linkWithPopup(firebase[provider])
 			.then(fetchSignInMethods)
@@ -62,7 +58,6 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 	};
 
 	const onUnLink = (providerId: any) => {
-		console.log(providerId);
 		firebase.auth.currentUser
 			.unLink(providerId)
 			.then(fetchSignInMethods)

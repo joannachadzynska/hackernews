@@ -14,7 +14,6 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 	errorCodes
 }) => {
 	const [error, setError] = useState(null);
-	console.log(errorCodes.ERROR_CODE_ACCOUNT_EXISTS);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
