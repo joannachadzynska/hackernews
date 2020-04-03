@@ -18,9 +18,13 @@ const SignInWithTwitter: React.SFC<SignInWithTwitterProps> = ({
 		firebase
 			.doSignInWithTwitter()
 			.then((user: any) => {
-				console.log(user.user);
-
-				firebase.createUserProfileDocument(user.user, { roles: {} });
+				const displayName = user.additionalUserInfo.username;
+				const email = user.additionalUserInfo.profile.name;
+				firebase.createUserProfileDocument(user.user, {
+					roles: {},
+					displayName,
+					email
+				});
 				setError(null);
 				history.push(ROUTES.HOME);
 			})
