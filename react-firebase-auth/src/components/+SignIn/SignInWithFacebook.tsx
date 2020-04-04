@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
-import { Button } from "../shared";
+import facebook from "../../assets/facebook3.svg";
+import { StyledButtonWithIcon } from "./style";
 
 export interface SignInWithFacebookProps {
 	firebase: any;
@@ -30,7 +31,9 @@ const SignInWithFacebook: React.SFC<SignInWithFacebookProps> = ({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Button type='submit'>Sign In with Facebook</Button>
+			<StyledButtonWithIcon type='submit'>
+				<img src={facebook} alt='Facebook Icon' />
+			</StyledButtonWithIcon>
 			{error && <p>{error}</p>}
 		</form>
 	);

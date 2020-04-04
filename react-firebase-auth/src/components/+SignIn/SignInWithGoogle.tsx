@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
-import { Button } from "../shared";
+
+import gmail from "../../assets/gmail.svg";
+import { StyledButtonWithIcon } from "./style";
 
 export interface SignInWithGoogleProps {
 	firebase: any;
@@ -34,7 +36,9 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Button type='submit'>Sign In with Google</Button>
+			<StyledButtonWithIcon type='submit'>
+				<img src={gmail} alt='Gmail icon' />
+			</StyledButtonWithIcon>
 			{error && <p>{error}</p>}
 		</form>
 	);

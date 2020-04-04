@@ -7,6 +7,8 @@ import PasswordForgetLink from "../+PasswordForget/PasswordForgetLink";
 import SignInWithGoogle from "./SignInWithGoogle";
 import SignInWithFacebook from "./SignInWithFacebook";
 import SignInWithTwitter from "./SignInWithTwitter";
+import { Title } from "../styles";
+import { SocialSignInLinks } from "./style";
 
 export interface SignInProps {}
 
@@ -25,15 +27,22 @@ const SignIn: React.SFC<SignInProps> = () => {
 	const history = useHistory();
 	return (
 		<div>
-			<h1>Sign In</h1>
+			<Title>Sign In</Title>
 			<SignInForm firebase={firebase} history={history} />
-			<SignInWithGoogle
-				firebase={firebase}
-				history={history}
-				errorCodes={errorCodes}
-			/>
-			<SignInWithFacebook firebase={firebase} history={history} />
-			<SignInWithTwitter firebase={firebase} history={history} />
+			<br />
+			<hr />
+			<p>Or sign in with: </p>
+			<br />
+			<SocialSignInLinks>
+				<SignInWithGoogle
+					firebase={firebase}
+					history={history}
+					errorCodes={errorCodes}
+				/>
+				<SignInWithFacebook firebase={firebase} history={history} />
+				<SignInWithTwitter firebase={firebase} history={history} />
+			</SocialSignInLinks>
+			<br />
 			<PasswordForgetLink />
 			<SignUpLink />
 		</div>

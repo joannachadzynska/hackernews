@@ -91,8 +91,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 				value={displayName}
 				id={displayName}
 				name='displayName'
-				onInputChange={handleChange}
-				placeholder='Full Name'>
+				onInputChange={handleChange}>
 				Username
 			</InputWithLabel>
 
@@ -101,8 +100,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 				value={email}
 				id={email}
 				name='email'
-				onInputChange={handleChange}
-				placeholder='Email Address'>
+				onInputChange={handleChange}>
 				Email Address
 			</InputWithLabel>
 
@@ -111,8 +109,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 				value={passwordOne}
 				id={passwordOne}
 				name='passwordOne'
-				onInputChange={handleChange}
-				placeholder='Password'>
+				onInputChange={handleChange}>
 				Password
 			</InputWithLabel>
 
@@ -121,20 +118,18 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 				value={passwordTwo}
 				id={passwordTwo}
 				name='passwordTwo'
-				onInputChange={handleChange}
-				placeholder='Confirm Password'>
+				onInputChange={handleChange}>
 				Confirm Password
 			</InputWithLabel>
 
-			<label>
+			<InputWithLabel
+				type='checkbox'
+				name='isAdmin'
+				onInputChange={handleChangeCheckbox}
+				id='isAdmin'
+				checked={isAdmin}>
 				Admin
-				<input
-					type='checkbox'
-					name='isAdmin'
-					checked={isAdmin}
-					onChange={handleChangeCheckbox}
-				/>
-			</label>
+			</InputWithLabel>
 
 			<Button type='submit' disabled={isInvalid}>
 				Sign Up

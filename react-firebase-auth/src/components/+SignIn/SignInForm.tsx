@@ -1,6 +1,7 @@
 import * as React from "react";
 import { InputWithLabel, Button } from "../shared";
 import * as ROUTES from "../../constants/routes";
+import { StyledForm } from "./style";
 
 export interface SignInFormProps {
 	firebase: any;
@@ -55,12 +56,11 @@ const SignInForm: React.SFC<SignInFormProps> = ({ firebase, history }) => {
 		});
 	};
 	return (
-		<form onSubmit={handleSubmit}>
+		<StyledForm onSubmit={handleSubmit}>
 			<InputWithLabel
 				name='email'
 				value={email}
 				id={email}
-				placeholder='Email Address'
 				onInputChange={handleChange}>
 				Email Address
 			</InputWithLabel>
@@ -70,7 +70,6 @@ const SignInForm: React.SFC<SignInFormProps> = ({ firebase, history }) => {
 				name='password'
 				value={password}
 				id={password}
-				placeholder='Password'
 				onInputChange={handleChange}>
 				Password
 			</InputWithLabel>
@@ -80,7 +79,7 @@ const SignInForm: React.SFC<SignInFormProps> = ({ firebase, history }) => {
 			</Button>
 
 			{error && <p>{error}</p>}
-		</form>
+		</StyledForm>
 	);
 };
 

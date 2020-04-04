@@ -36,8 +36,6 @@ export const MainButton = styled.button`
 	}
 
 	a {
-		color: white;
-		text-decoration: none;
 		letter-spacing: 1.9px;
 		font-weight: 600;
 		font-size: 1.2em;

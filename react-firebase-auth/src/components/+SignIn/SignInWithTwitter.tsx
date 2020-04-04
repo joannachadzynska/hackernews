@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
-import { Button } from "../shared";
+import twitter from "../../assets/twitter2.svg";
+import { StyledButtonWithIcon } from "./style";
 
 export interface SignInWithTwitterProps {
 	firebase: any;
@@ -35,7 +36,9 @@ const SignInWithTwitter: React.SFC<SignInWithTwitterProps> = ({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Button type='submit'>Sign In with Twitter</Button>
+			<StyledButtonWithIcon type='submit'>
+				<img src={twitter} alt='Twitter icon' />
+			</StyledButtonWithIcon>
 			{error && <p>{error}</p>}
 		</form>
 	);
