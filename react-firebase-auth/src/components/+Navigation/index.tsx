@@ -1,6 +1,7 @@
 import React from "react";
 import NavigationAuth from "./NavigationAuth";
 import NavigationNonAuth from "./NavigationNonAuth";
+import { StyledNav } from "./style";
 
 export interface NavigationProps {
 	authUser: any;
@@ -8,13 +9,13 @@ export interface NavigationProps {
 
 const Navigation: React.SFC<NavigationProps> = ({ authUser }) => {
 	return (
-		<div>
+		<StyledNav>
 			{authUser ? (
 				<NavigationAuth authUser={authUser} />
 			) : (
 				<NavigationNonAuth />
 			)}
-		</div>
+		</StyledNav>
 	);
 };
 

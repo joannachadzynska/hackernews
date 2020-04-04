@@ -47,32 +47,41 @@ const App = () => {
 	return (
 		<AuthUserContext.Provider value={authUser}>
 			<Router>
-				<Navigation authUser={authUser} />
+				<header>
+					<Navigation authUser={authUser} />
+				</header>
 
-				<hr />
-				<Switch>
-					<Route exact path={ROUTES.LANDING}>
-						<LandingPage />
-					</Route>
-					<Route path={ROUTES.SIGN_UP}>
-						<SignUp />
-					</Route>
-					<Route path={ROUTES.SIGN_IN}>
-						<SignIn />
-					</Route>
-					<Route path={ROUTES.PASSWORD_FORGET}>
-						<PasswordForget />
-					</Route>
-					<Route path={ROUTES.HOME}>
-						<Home />
-					</Route>
-					<Route path={ROUTES.ACCOUNT}>
-						<Account />
-					</Route>
-					<Route path={ROUTES.ADMIN}>
-						<Admin />
-					</Route>
-				</Switch>
+				<main className='wrapper'>
+					<Switch>
+						<Route exact path={ROUTES.LANDING}>
+							<LandingPage />
+						</Route>
+						<Route path={ROUTES.SIGN_UP}>
+							<SignUp />
+						</Route>
+						<Route path={ROUTES.SIGN_IN}>
+							<SignIn />
+						</Route>
+						<Route path={ROUTES.PASSWORD_FORGET}>
+							<PasswordForget />
+						</Route>
+						<Route path={ROUTES.HOME}>
+							<Home />
+						</Route>
+						<Route path={ROUTES.ACCOUNT}>
+							<Account />
+						</Route>
+						<Route path={ROUTES.ADMIN}>
+							<Admin />
+						</Route>
+					</Switch>
+				</main>
+
+				<footer>
+					<span className='wrapper'>
+						© Joanna Chądzyńska {new Date().getFullYear()}
+					</span>
+				</footer>
 			</Router>
 		</AuthUserContext.Provider>
 	);

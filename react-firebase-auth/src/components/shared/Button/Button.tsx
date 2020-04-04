@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StyledButton } from "./style";
 
 export interface ButtonProps {
 	children: React.ReactNode;
@@ -9,7 +10,7 @@ export interface ButtonProps {
 }
 
 const Button: React.SFC<ButtonProps> = ({ children, ...shared }) => {
-	return <button {...shared}>{children}</button>;
+	return <StyledButton {...shared}>{children}</StyledButton>;
 };
 
 export default Button;
