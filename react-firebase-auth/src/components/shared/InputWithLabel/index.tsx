@@ -1,5 +1,7 @@
 import * as React from "react";
 import { InputWithLabelProps } from "./types";
+import { StyledInputWithLabel } from "./style";
+import "./style.scss";
 
 const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 	id,
@@ -19,8 +21,7 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 		}
 	}, [isFocused]);
 	return (
-		<>
-			<label htmlFor={id}>{children}</label>
+		<StyledInputWithLabel>
 			<input
 				ref={inputRef}
 				type={type}
@@ -31,7 +32,10 @@ const InputWithLabel: React.SFC<InputWithLabelProps> = ({
 				autoFocus={isFocused}
 				placeholder={placeholder}
 			/>
-		</>
+			<span className='highlight'></span>
+			<span className='bar'></span>
+			<label>{children}</label>
+		</StyledInputWithLabel>
 	);
 };
 
