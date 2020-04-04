@@ -11,6 +11,13 @@ body {
 			rgba(0, 0, 0, 0.09)
 		),
 		url(./assets/bg.jpg);
+
+	color: #fff;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
 }
 
 .wrapper {
