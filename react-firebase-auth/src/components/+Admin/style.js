@@ -35,3 +35,20 @@ export const StyledList = styled.table`
 		}
 	}
 `;
+
+export const StyledDetails = styled.div`
+	border-radius: 5px;
+	background: linear-gradient(145deg, #000000, #323232);
+	box-shadow: 17px 14px 23px -1px #000000;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 1.5rem;
+	width: 70%;
+
+	span {
+		display: flex;
+		justify-content: space-between;
+		line-height: 2;
+	}
+`;

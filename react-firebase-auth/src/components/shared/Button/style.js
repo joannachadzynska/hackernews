@@ -12,9 +12,10 @@ export const StyledButton = styled.button`
 	border-radius: 3px;
 	font-size: 16px;
 	text-decoration: one;
+	transition: ease all 0.3s;
 
 	&:hover {
-		background-color: #e53935;
+		background-color: #a2221f;
 	}
 
 	a {

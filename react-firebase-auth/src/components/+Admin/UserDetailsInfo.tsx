@@ -3,6 +3,7 @@ import { format, fromUnixTime } from "date-fns";
 
 import { FirebaseContext } from "../+Firebase";
 import { Button } from "../shared";
+import { StyledDetails } from "./style";
 
 export interface UserDetailsInfoProps {
 	user: any;
@@ -23,7 +24,7 @@ const UserDetailsInfo: React.SFC<UserDetailsInfoProps> = ({ user, id }) => {
 	};
 
 	return (
-		<div>
+		<StyledDetails>
 			<span>
 				<strong>ID: </strong>
 				{id}
@@ -41,7 +42,7 @@ const UserDetailsInfo: React.SFC<UserDetailsInfoProps> = ({ user, id }) => {
 			<span>
 				<Button onClick={onSendPasswordResetEmail}>Send Password Reset</Button>
 			</span>
-		</div>
+		</StyledDetails>
 	);
 };
 

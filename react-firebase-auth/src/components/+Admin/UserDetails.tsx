@@ -41,10 +41,13 @@ const UserDetails: React.SFC<UserDetailsProps> = () => {
 
 	return (
 		<div>
-			<Title>User details page</Title>
-			<h2>User ({slug.userId})</h2>
+			<h1>User details page</h1>
+			<span>
+				User <strong>({slug.userId})</strong>
+			</span>
+			<br />
 			{loading && <div>Loading ...</div>}
-
+			<br />
 			{user && <UserDetailsInfo user={user} id={slug.userId} />}
 		</div>
 	);
