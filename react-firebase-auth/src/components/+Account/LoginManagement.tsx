@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import { FirebaseContext } from "../+Firebase";
 import DefaultLoginToggle from "./DefaultLoginToggle";
 import SocialLoginToggle from "./SocialLoginToggle";
+import { SignInMethodsList } from "./style";
 
 export interface LoginManagementProps {
 	authUser: any;
@@ -79,8 +80,8 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 	return (
 		<div>
 			<h1>Login Management</h1>
-			Sign In Methods:
-			<ul>
+
+			<SignInMethodsList>
 				{SIGN_IN_METHODS.map((method: any) => {
 					const onlyOneLeft = state.activeSignInMethods.length === 1;
 
@@ -110,7 +111,7 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 						</li>
 					);
 				})}
-			</ul>
+			</SignInMethodsList>
 		</div>
 	);
 };
