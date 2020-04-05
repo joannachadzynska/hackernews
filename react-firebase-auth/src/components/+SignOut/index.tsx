@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
-import { Button } from "../shared";
 import * as ROUTES from "../../constants/routes";
+import { SignOutButton } from "./style";
 
 export interface SignOutProps {}
 
@@ -11,14 +11,14 @@ const SignOut: React.SFC<SignOutProps> = () => {
 	const history = useHistory();
 
 	return (
-		<Button
+		<SignOutButton
 			type='button'
 			onClick={() => {
 				firebase.doSignOut();
 				history.push(ROUTES.LANDING);
 			}}>
 			Sign Out
-		</Button>
+		</SignOutButton>
 	);
 };
 
