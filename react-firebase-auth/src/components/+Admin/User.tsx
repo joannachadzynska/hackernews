@@ -9,18 +9,12 @@ export interface UserProps {
 
 const User: React.SFC<UserProps> = ({ user }) => {
 	return (
-		<li>
-			<span style={{ width: "40%" }}>
-				<strong>ID:</strong> {user.uid}
-			</span>
-			<span style={{ width: "25%" }}>
-				<strong>E-Mail:</strong> {user.data.email}
-			</span>
-			<span style={{ width: "25%" }}>
-				<strong>Username:</strong> {user.data.displayName}
-			</span>
-			{/* <span><strong>Created at: </strong></span> */}
-			<span style={{ width: "10%" }}>
+		<tr>
+			<td>{user.uid}</td>
+			<td>{user.data.email}</td>
+			<td>{user.data.displayName}</td>
+
+			<td>
 				<Link
 					to={{
 						pathname: `${ROUTES.ADMIN}/users/${user.uid}`,
@@ -28,11 +22,8 @@ const User: React.SFC<UserProps> = ({ user }) => {
 					}}>
 					Details
 				</Link>
-			</span>
-			{/* <span>
-				<strong>Role: </strong>
-			</span> */}
-		</li>
+			</td>
+		</tr>
 	);
 };
 

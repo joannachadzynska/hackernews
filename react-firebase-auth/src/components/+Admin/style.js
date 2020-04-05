@@ -1,17 +1,37 @@
 import styled from "styled-components";
 
-export const StyledList = styled.ul`
-	list-style-type: none;
+export const StyledList = styled.table`
+	border-collapse: collapse;
+	width: 100%;
 
-	li {
-		border: 1px solid black;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 5vh;
+	thead {
+		background: #212b5de0;
+		tr {
+			height: 5vh;
+		}
+	}
 
-		&:hover {
-			background-color: lightblue;
+	tbody {
+		tr {
+			background: #1e2961;
+			height: 8vh;
+			transition: ease all 0.2s;
+
+			&:hover {
+				background: #0c1023;
+			}
+
+			td {
+				padding-left: 1rem;
+			}
+		}
+
+		tr:nth-of-type(odd) {
+			background: #1a2f40;
+
+			&:hover {
+				background: #0c1023;
+			}
 		}
 	}
 `;

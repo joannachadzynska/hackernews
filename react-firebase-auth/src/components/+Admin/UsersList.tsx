@@ -37,11 +37,22 @@ const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 	return (
 		<div>
 			<h2>Users</h2>
+			<br />
 			{loading && <div>Loading...</div>}
 			<StyledList>
-				{users.map((user: any) => (
-					<User key={user.uid} user={user} />
-				))}
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>E-Mail</th>
+						<th>Username</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{users.map((user: any) => (
+						<User key={user.uid} user={user} />
+					))}
+				</tbody>
 			</StyledList>
 		</div>
 	);
