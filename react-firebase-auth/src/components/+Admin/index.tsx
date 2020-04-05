@@ -33,10 +33,10 @@ const Admin: React.SFC<AdminProps> = () => {
 			});
 
 		return () => usersCollectionRef();
-	}, [firebase, state]);
+	}, []);
 
 	const condition = (authUser: any) =>
-		authUser && !!authUser.roles[ROLES.ADMIN];
+		authUser && authUser.roles.includes(ROLES.ADMIN);
 
 	useEffect(() => {
 		const listen = firebase.onAuthUserListener(
@@ -48,7 +48,9 @@ const Admin: React.SFC<AdminProps> = () => {
 			() => history.push(ROUTES.SIGN_IN)
 		);
 		return () => listen();
-	}, [firebase, history]);
+	}, []);
+
+	console.log(state.users);
 
 	return (
 		<div>

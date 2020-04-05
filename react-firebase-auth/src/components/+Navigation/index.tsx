@@ -1,20 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthUserContext } from "../+Session";
 import NavigationAuth from "./NavigationAuth";
 import NavigationNonAuth from "./NavigationNonAuth";
 import { StyledNav } from "./style";
 
-export interface NavigationProps {
-	authUser: any;
-}
+export interface NavigationProps {}
 
-const Navigation: React.SFC<NavigationProps> = ({ authUser }) => {
+const Navigation: React.SFC<NavigationProps> = () => {
+	const authUser = useContext(AuthUserContext);
 	return (
 		<StyledNav>
-			{authUser ? (
-				<NavigationAuth authUser={authUser} />
-			) : (
-				<NavigationNonAuth />
-			)}
+			{authUser ? <NavigationAuth /> : <NavigationNonAuth />}
 		</StyledNav>
 	);
 };
