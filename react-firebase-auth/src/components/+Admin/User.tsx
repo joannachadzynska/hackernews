@@ -21,7 +21,13 @@ const User: React.SFC<UserProps> = ({ user }) => {
 			</span>
 			{/* <span><strong>Created at: </strong></span> */}
 			<span style={{ width: "10%" }}>
-				<Link to={`${ROUTES.ADMIN}/users/${user.uid}`}>Details</Link>
+				<Link
+					to={{
+						pathname: `${ROUTES.ADMIN}/users/${user.uid}`,
+						state: { user }
+					}}>
+					Details
+				</Link>
 			</span>
 			{/* <span>
 				<strong>Role: </strong>
