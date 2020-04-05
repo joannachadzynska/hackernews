@@ -38,6 +38,8 @@ const Account: React.SFC<AccountProps> = () => {
 			<hr />
 			<br />
 			<LoginManagement authUser={authUser} />
+			<br />
+			<br />
 		</div>
 	);
 };

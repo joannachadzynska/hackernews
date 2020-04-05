@@ -53,7 +53,6 @@ const DefaultLoginToggle: React.SFC<DefaultLoginToggleProps> = ({
 				id={passwordOne}
 				value={passwordOne}
 				type='password'
-				placeholder='New Password'
 				onInputChange={handleChange}>
 				New Password
 			</InputWithLabel>
@@ -63,7 +62,6 @@ const DefaultLoginToggle: React.SFC<DefaultLoginToggleProps> = ({
 				id={passwordTwo}
 				value={passwordTwo}
 				type='password'
-				placeholder='Confirm New Password'
 				onInputChange={handleChange}>
 				Confirm New Password
 			</InputWithLabel>

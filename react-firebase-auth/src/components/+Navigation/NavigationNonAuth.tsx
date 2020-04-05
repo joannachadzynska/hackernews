@@ -11,14 +11,12 @@ export interface NavigationNonAuthProps {}
 const NavigationNonAuth: React.SFC<NavigationNonAuthProps> = () => {
 	return (
 		<StyledNavList className='wrapper'>
-			<NavLink to={ROUTES.LANDING} activeClassName='active'>
+			<NavLink to={ROUTES.LANDING}>
 				<StyledLogo src={logo} alt='fireboard logo' />
 			</NavLink>
 
 			<SignOutButton>
-				<NavLink to={ROUTES.SIGN_IN} activeClassName='active'>
-					Sign In
-				</NavLink>
+				<NavLink to={ROUTES.SIGN_IN}>Sign In</NavLink>
 			</SignOutButton>
 		</StyledNavList>
 	);

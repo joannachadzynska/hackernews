@@ -6,7 +6,7 @@ export const StyledLandingPage = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-	height: 100%;
+	height: 80vh;
 `;
 
 export const Title = styled.h1`

@@ -6,3 +6,5 @@ export const SignInMethodsList = styled.ul`
 	justify-content: space-between;
 	width: 100%;
 `;
+
+export const StyledDefaultLogin = styled.div``;
