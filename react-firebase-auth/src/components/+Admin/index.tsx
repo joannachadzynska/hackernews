@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Switch, Route, Link } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
 // import { AuthUserContext } from "../+Session";
 import UsersList from "./UsersList";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
+import UserDetails from "./UserDetails";
 
 export interface AdminProps {}
 
@@ -50,8 +51,6 @@ const Admin: React.SFC<AdminProps> = () => {
 		return () => listen();
 	}, []);
 
-	console.log(state.users);
-
 	return (
 		<div>
 			<h1>Admin</h1>
@@ -59,7 +58,15 @@ const Admin: React.SFC<AdminProps> = () => {
 
 			{state.loading && <div>Loading...</div>}
 			<p>Restricted area! Only users with the admin role are authorized</p>
-			<UsersList users={state.users} />
+
+			<Switch>
+				<Route exact path={ROUTES.ADMIN_USERS_DETAILS}>
+					<UserDetails />
+				</Route>
+				<Route exact path={ROUTES.ADMIN}>
+					<UsersList users={state.users} />
+				</Route>
+			</Switch>
 		</div>
 	);
 };
