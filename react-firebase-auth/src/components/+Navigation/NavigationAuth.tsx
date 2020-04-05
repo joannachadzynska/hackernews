@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthUserContext } from "../+Session";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
@@ -6,11 +7,11 @@ import SignOut from "../+SignOut";
 import { StyledNavList, StyledLogo } from "./style";
 import logo from "../../assets/logo.svg";
 
-export interface NavigationAuthProps {
-	authUser: any;
-}
+export interface NavigationAuthProps {}
 
-const NavigationAuth: React.SFC<NavigationAuthProps> = ({ authUser }) => {
+const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
+	const authUser: any = useContext(AuthUserContext);
+
 	return (
 		<StyledNavList className='wrapper'>
 			<Link to={ROUTES.LANDING}>
@@ -23,7 +24,7 @@ const NavigationAuth: React.SFC<NavigationAuthProps> = ({ authUser }) => {
 				<Link to={ROUTES.ACCOUNT}>Account</Link>
 			</li>
 
-			{authUser.roles !== undefined && !!authUser.roles[ROLES.ADMIN] && (
+			{authUser.roles !== undefined && authUser.roles.includes(ROLES.ADMIN) && (
 				<li>
 					<Link to={ROUTES.ADMIN}>Admin</Link>
 				</li>

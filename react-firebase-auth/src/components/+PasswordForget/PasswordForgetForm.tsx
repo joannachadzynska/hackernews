@@ -47,8 +47,7 @@ const PasswordForgetForm: React.SFC<PasswordForgetFormProps> = ({
 				value={email}
 				id={email}
 				name='email'
-				onInputChange={handleChange}
-				placeholder='Email Address'>
+				onInputChange={handleChange}>
 				Email
 			</InputWithLabel>
 

@@ -29,9 +29,12 @@ const Account: React.SFC<AccountProps> = () => {
 			<h1>Account: {authUser !== null ? authUser.email : "user email"}</h1>
 
 			<PasswordForgetForm firebase={firebase} />
+
+			<br />
 			<hr />
 			<br />
 			<PasswordChangeForm firebase={firebase} />
+			<br />
 			<hr />
 			<br />
 			<LoginManagement authUser={authUser} />

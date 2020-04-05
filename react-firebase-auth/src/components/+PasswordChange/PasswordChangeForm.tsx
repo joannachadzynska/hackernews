@@ -47,8 +47,7 @@ const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
 				name='passwordOne'
 				id={passwordOne}
 				value={passwordOne}
-				onInputChange={handleChange}
-				placeholder='New Password'>
+				onInputChange={handleChange}>
 				New Password
 			</InputWithLabel>
 
@@ -57,8 +56,7 @@ const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
 				name='passwordTwo'
 				id={passwordTwo}
 				value={passwordTwo}
-				onInputChange={handleChange}
-				placeholder='Confirm New Password'>
+				onInputChange={handleChange}>
 				Confirm New Password
 			</InputWithLabel>
 

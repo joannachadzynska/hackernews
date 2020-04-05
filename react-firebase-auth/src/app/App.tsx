@@ -48,7 +48,7 @@ const App = () => {
 		<AuthUserContext.Provider value={authUser}>
 			<Router>
 				<header>
-					<Navigation authUser={authUser} />
+					<Navigation />
 				</header>
 
 				<main className='wrapper'>
