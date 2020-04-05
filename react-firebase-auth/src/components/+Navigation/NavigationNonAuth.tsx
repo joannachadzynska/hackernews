@@ -1,22 +1,25 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { StyledNavList, StyledLogo } from "./style";
 import { Button } from "../shared";
 import logo from "../../assets/logo.svg";
+import { SignOutButton } from "../+SignOut/style";
 
 export interface NavigationNonAuthProps {}
 
 const NavigationNonAuth: React.SFC<NavigationNonAuthProps> = () => {
 	return (
 		<StyledNavList className='wrapper'>
-			<Link to={ROUTES.LANDING}>
+			<NavLink to={ROUTES.LANDING} activeClassName='active'>
 				<StyledLogo src={logo} alt='fireboard logo' />
-			</Link>
+			</NavLink>
 
-			<Button>
-				<Link to={ROUTES.SIGN_IN}>Sign In</Link>
-			</Button>
+			<SignOutButton>
+				<NavLink to={ROUTES.SIGN_IN} activeClassName='active'>
+					Sign In
+				</NavLink>
+			</SignOutButton>
 		</StyledNavList>
 	);
 };
