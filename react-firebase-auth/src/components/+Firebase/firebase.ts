@@ -27,8 +27,12 @@ class Firebase implements FirebaseInterface {
 	twitterProvider: any;
 	emailAuthProvider: any;
 
+	serverValue: any;
+
 	constructor() {
 		app.initializeApp(config);
+
+		this.serverValue = app.database.ServerValue;
 
 		this.emailAuthProvider = app.auth.EmailAuthProvider;
 		this.auth = app.auth();
