@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FirebaseContext } from "../+Firebase";
 import MessagesList from "./MessagesList";
+import MessagesForm from "./MessagesForm";
 
 export interface MessagesProps {}
 
@@ -8,7 +9,7 @@ const Messages: React.SFC<MessagesProps> = () => {
 	const firebase = useContext(FirebaseContext);
 	const [state, setState] = useState({
 		loading: false,
-		messages: []
+		messages: null
 	});
 	const { loading, messages } = state;
 
@@ -21,7 +22,7 @@ const Messages: React.SFC<MessagesProps> = () => {
 		const messagesCollectionRef = firebase
 			.messages()
 			.onSnapshot((snapshot: any) => {
-				const messagesObject = firebase.convertCollectionsSnapshotToMap(
+				const messagesObject: any = firebase.convertCollectionsSnapshotToMap(
 					snapshot
 				);
 
@@ -34,16 +35,13 @@ const Messages: React.SFC<MessagesProps> = () => {
 							uid: key
 						})
 					);
+
 					setState({
-						messages: messagesList,
-						loading: false
-					});
-				} else {
-					setState({
-						messages: [],
+						messages: messagesObject,
 						loading: false
 					});
 				}
+
 				// setState({
 				// 	messages: messagesObject,
 				// 	loading: false
@@ -52,16 +50,22 @@ const Messages: React.SFC<MessagesProps> = () => {
 
 		return () => messagesCollectionRef();
 	}, []);
+
+	const onRemoveItem = (uid: any) => {
+		firebase.message(uid).delete();
+	};
+
 	return (
 		<div>
 			{loading && <div>Loading ...</div>}
-			<p>lorem10</p>
 
 			{messages ? (
-				<MessagesList messages={messages} />
+				<MessagesList messages={messages} onRemoveMessage={onRemoveItem} />
 			) : (
 				<div>There are no messages ... 😥</div>
 			)}
+
+			<MessagesForm />
 		</div>
 	);
 };
