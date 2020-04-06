@@ -4,6 +4,7 @@ import { FirebaseContext } from "../+Firebase";
 import { AuthUserContext } from "../+Session";
 import * as ROUTES from "../../constants/routes";
 import { Button } from "../shared";
+import Messages from "../+Messages";
 
 export interface HomeProps {}
 
@@ -68,6 +69,8 @@ const Home: React.SFC<HomeProps> = () => {
 			<h1>Home</h1>
 			<p>The Home Page is accessible by every signed in user.</p>
 			<p>Hello, {authUser !== null ? authUser.displayName : "user"}</p>
+
+			<Messages />
 		</div>
 	);
 };

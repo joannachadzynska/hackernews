@@ -20,7 +20,7 @@ const SignInWithFacebook: React.SFC<SignInWithFacebookProps> = ({
 		firebase
 			.doSignInWithFacebook()
 			.then((user: any) => {
-				firebase.createUserProfileDocument(user.user, { roles: {} });
+				firebase.createUserProfileDocument(user.user, { roles: [] });
 				setError(null);
 				history.push(ROUTES.HOME);
 			})

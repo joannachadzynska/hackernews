@@ -22,7 +22,7 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 		firebase
 			.doSignInWithGoogle()
 			.then((user: any) => {
-				firebase.createUserProfileDocument(user.user, { roles: {} });
+				firebase.createUserProfileDocument(user.user, { roles: [] });
 				setError(null);
 				history.push(ROUTES.HOME);
 			})

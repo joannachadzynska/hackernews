@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import User from "./User";
 import { FirebaseContext } from "../+Firebase";
 import { StyledList } from "./style";

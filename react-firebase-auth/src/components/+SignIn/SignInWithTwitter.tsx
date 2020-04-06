@@ -22,7 +22,7 @@ const SignInWithTwitter: React.SFC<SignInWithTwitterProps> = ({
 				const displayName = user.additionalUserInfo.username;
 				const email = user.additionalUserInfo.profile.name;
 				firebase.createUserProfileDocument(user.user, {
-					roles: {},
+					roles: [],
 					displayName,
 					email
 				});

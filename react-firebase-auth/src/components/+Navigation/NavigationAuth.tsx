@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthUserContext } from "../+Session";
 import { NavLink } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
@@ -11,6 +11,28 @@ export interface NavigationAuthProps {}
 
 const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
 	const authUser: any = useContext(AuthUserContext);
+	const [isRolesUndefined, setRoles] = useState(false);
+
+	useEffect(() => {
+		if (authUser.roles !== undefined) {
+			setRoles(false);
+		} else {
+			setRoles(true);
+		}
+
+		const setAdminLink = () => {
+			// if (authUser.roles.includes("ADMIN")) {
+			// 	return (
+			// 		<li>
+			// 			<NavLink to={ROUTES.ADMIN} activeClassName='active'>
+			// 				Admin
+			// 			</NavLink>
+			// 		</li>
+			// 	);
+			// }
+		};
+		// return () => setAdminLink();
+	}, []);
 
 	return (
 		<StyledNavList className='wrapper'>
@@ -27,15 +49,13 @@ const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
 					Account
 				</NavLink>
 			</li>
-
-			{authUser.roles !== undefined && authUser.roles.includes(ROLES.ADMIN) && (
+			{/* {authUser.roles.includes(ROLES.ADMIN) && (
 				<li>
 					<NavLink to={ROUTES.ADMIN} activeClassName='active'>
 						Admin
 					</NavLink>
 				</li>
-			)}
-
+			)} */}
 			<li>
 				<SignOut />
 			</li>
