@@ -9,7 +9,7 @@ const Messages: React.SFC<MessagesProps> = () => {
 	const firebase = useContext(FirebaseContext);
 	const [state, setState] = useState({
 		loading: false,
-		messages: null
+		messages: []
 	});
 	const { loading, messages } = state;
 
@@ -40,12 +40,12 @@ const Messages: React.SFC<MessagesProps> = () => {
 						messages: messagesObject,
 						loading: false
 					});
+				} else {
+					setState({
+						messages: [],
+						loading: false
+					});
 				}
-
-				// setState({
-				// 	messages: messagesObject,
-				// 	loading: false
-				// });
 			});
 
 		return () => messagesCollectionRef();
@@ -55,12 +55,27 @@ const Messages: React.SFC<MessagesProps> = () => {
 		firebase.message(uid).delete();
 	};
 
+	const onEditMessage = (message: any, text: any) => {
+		const { uid, data } = message;
+		const date = new Date();
+
+		firebase.message(uid).set({
+			...data,
+			text,
+			editedAt: date
+		});
+	};
+
 	return (
 		<div>
 			{loading && <div>Loading ...</div>}
 
-			{messages ? (
-				<MessagesList messages={messages} onRemoveMessage={onRemoveItem} />
+			{messages.length > 0 ? (
+				<MessagesList
+					messages={messages}
+					onRemoveMessage={onRemoveItem}
+					onEditMessage={onEditMessage}
+				/>
 			) : (
 				<div>There are no messages ... 😥</div>
 			)}

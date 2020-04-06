@@ -4,11 +4,13 @@ import MessageItem from "./MessageItem";
 export interface MessagesListProps {
 	messages: any;
 	onRemoveMessage: any;
+	onEditMessage: any;
 }
 
 const MessagesList: React.SFC<MessagesListProps> = ({
 	messages,
-	onRemoveMessage
+	onRemoveMessage,
+	onEditMessage
 }) => {
 	return (
 		<ul>
@@ -17,6 +19,7 @@ const MessagesList: React.SFC<MessagesListProps> = ({
 					key={message.uid}
 					message={message}
 					onRemoveMessage={onRemoveMessage}
+					onEditMessage={onEditMessage}
 				/>
 			))}
 		</ul>
