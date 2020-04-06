@@ -104,9 +104,9 @@ class Firebase implements FirebaseInterface {
 				this.userFirestore(authUser.uid).onSnapshot((snapshot: any) => {
 					const dbUser = snapshot.data();
 
-					// if (!dbUser.roles) {
-					// 	dbUser.roles = {};
-					// }
+					if (dbUser.roles === undefined) {
+						dbUser.roles = [];
+					}
 
 					authUser = {
 						uid: authUser.uid,
@@ -147,6 +147,10 @@ class Firebase implements FirebaseInterface {
 
 		return transformedCollection;
 	};
+
+	// *** Message API *** //
+	message = (uid: any) => this.firestore.collection("messages").doc(`${uid}`);
+	messages = () => this.firestore.collection("messages");
 }
 
 // firebase.analytics();
