@@ -1,5 +1,17 @@
-import React, { useState } from "react";
-import { Button, InputWithLabel } from "../shared";
+import React, { useState, useContext, useEffect } from "react";
+import { FirebaseContext } from "../+Firebase";
+import { convertMessageDate } from "../../helpers/utils";
+import { InputWithLabel } from "../shared";
+import {
+	StyledButtonWithIcon,
+	ChatUserTitle,
+	ChatMessage,
+	ChatButtons
+} from "./style";
+import edit from "../../assets/edit.svg";
+import deleteIcon from "../../assets/delete.svg";
+import save from "../../assets/floppy-disk.svg";
+import reset from "../../assets/reset.svg";
 
 export interface MessageItemProps {
 	message: any;
@@ -14,10 +26,35 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 	onEditMessage,
 	authUser
 }) => {
+	const firebase = useContext(FirebaseContext);
 	const [state, setState] = useState({
 		editMode: false,
 		editText: message.data.text
 	});
+	const [otherUser, setOtherUser] = useState({
+		email: "",
+		displayName: ""
+	});
+
+	useEffect(() => {
+		const otherChatUser = firebase
+			.userFirestore(message.data.userId)
+			.onSnapshot((snapshot: any) => {
+				if (authUser.id !== message.data.userId) {
+					setOtherUser({
+						displayName: snapshot.data().displayName,
+						email: snapshot.data().email
+					});
+				} else {
+					setOtherUser({
+						email: "",
+						displayName: ""
+					});
+				}
+			});
+
+		return () => otherChatUser();
+	}, []);
 
 	const { editMode, editText } = state;
 
@@ -43,6 +80,7 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 			editMode: false
 		});
 	};
+
 	return (
 		<li>
 			{editMode ? (
@@ -53,29 +91,55 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 					onInputChange={onChangeEditText}
 				/>
 			) : (
-				<span>
-					{/* <strong>{message.uid}</strong>  */}
-					{message.data.text}
-					{message.data.editedAt && <span>(Edited)</span>}
-				</span>
+				<div style={{ width: "100%" }}>
+					<ChatUserTitle>
+						{authUser.uid === message.data.userId ? (
+							<strong>Me</strong>
+						) : (
+							<strong>{otherUser.displayName}</strong>
+						)}
+					</ChatUserTitle>
+					<ChatMessage>
+						<span> {message.data.text}</span>
+					</ChatMessage>
+
+					<div>
+						<small>{convertMessageDate(message.data.createdAt?.seconds)}</small>
+						&nbsp;
+						{message.data.editedAt && (
+							<i>
+								(Edited: {convertMessageDate(message.data.editedAt?.seconds)})
+							</i>
+						)}
+					</div>
+				</div>
 			)}
 
 			{authUser.uid === message.data.userId && (
-				<span>
+				<ChatButtons>
 					{editMode ? (
-						<span>
-							<Button onClick={onSaveEditText}>Save</Button>
-							<Button onClick={toggleEditMode}>Reset</Button>
-						</span>
+						<>
+							<StyledButtonWithIcon onClick={onSaveEditText}>
+								<img src={save} alt='floppy disc icon' />
+							</StyledButtonWithIcon>
+							&nbsp;
+							<StyledButtonWithIcon onClick={toggleEditMode}>
+								<img src={reset} alt='reset icon' />
+							</StyledButtonWithIcon>
+						</>
 					) : (
-						<span>
-							<Button onClick={toggleEditMode}>Edit</Button>
-							<Button onClick={() => onRemoveMessage(message.uid)}>
-								Delete
-							</Button>
-						</span>
+						<>
+							<StyledButtonWithIcon onClick={toggleEditMode}>
+								<img src={edit} alt='edit icon' />
+							</StyledButtonWithIcon>
+							&nbsp;
+							<StyledButtonWithIcon
+								onClick={() => onRemoveMessage(message.uid)}>
+								<img src={deleteIcon} alt='delete icon trash' />
+							</StyledButtonWithIcon>
+						</>
 					)}
-				</span>
+				</ChatButtons>
 			)}
 		</li>
 	);

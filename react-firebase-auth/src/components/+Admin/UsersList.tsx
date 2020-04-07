@@ -31,7 +31,7 @@ const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 			});
 
 		return () => usersCollectionRef();
-	}, [firebase, state]);
+	}, []);
 
 	return (
 		<div>

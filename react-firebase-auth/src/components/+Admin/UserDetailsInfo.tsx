@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { format, fromUnixTime } from "date-fns";
-
 import { FirebaseContext } from "../+Firebase";
 import { Button } from "../shared";
+import { convertSecondsToDate } from "../../helpers/utils";
 import { StyledDetails } from "./style";
 
 export interface UserDetailsInfoProps {
@@ -14,13 +13,6 @@ const UserDetailsInfo: React.SFC<UserDetailsInfoProps> = ({ user, id }) => {
 	const firebase = useContext(FirebaseContext);
 	const onSendPasswordResetEmail = () => {
 		firebase.doPasswordReset(user.email);
-	};
-
-	const convertSecondsToDate = (timestamp: number) => {
-		if (timestamp === undefined) return;
-		const date = fromUnixTime(timestamp);
-		const formatedDate = format(date, "eeee do MMMM yyyy, kk:mm:ss, OOOO");
-		return formatedDate;
 	};
 
 	return (

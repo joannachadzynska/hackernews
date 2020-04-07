@@ -3,6 +3,7 @@ import { FirebaseContext } from "../+Firebase";
 import { AuthUserContext } from "../+Session";
 import MessagesList from "./MessagesList";
 import MessagesForm from "./MessagesForm";
+import { Button } from "../shared";
 
 export interface MessagesProps {}
 
@@ -77,11 +78,6 @@ const Messages: React.SFC<MessagesProps> = () => {
 
 	return (
 		<div>
-			{!loading && messages && (
-				<button type='button' onClick={nextPage}>
-					More
-				</button>
-			)}
 			{loading && <div>Loading ...</div>}
 
 			{messages.length > 0 ? (
@@ -93,13 +89,18 @@ const Messages: React.SFC<MessagesProps> = () => {
 				/>
 			) : (
 				<div>
-					There are no messages ...{" "}
+					There are no messages ...
 					<span role='img' aria-label='sad emoji'>
 						😥
 					</span>
 				</div>
 			)}
 
+			{!loading && messages && (
+				<Button type='button' onClick={nextPage}>
+					More
+				</Button>
+			)}
 			<MessagesForm />
 		</div>
 	);

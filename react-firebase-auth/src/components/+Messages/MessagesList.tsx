@@ -1,5 +1,6 @@
 import React from "react";
 import MessageItem from "./MessageItem";
+import { StyledChatList } from "./style";
 
 export interface MessagesListProps {
 	messages: any;
@@ -15,7 +16,7 @@ const MessagesList: React.SFC<MessagesListProps> = ({
 	authUser
 }) => {
 	return (
-		<ul>
+		<StyledChatList>
 			{messages.map((message: any) => (
 				<MessageItem
 					key={message.uid}
@@ -25,7 +26,7 @@ const MessagesList: React.SFC<MessagesListProps> = ({
 					authUser={authUser}
 				/>
 			))}
-		</ul>
+		</StyledChatList>
 	);
 };
 

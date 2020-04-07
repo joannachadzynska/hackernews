@@ -37,13 +37,13 @@ const MessagesForm: React.SFC<MessagesFormProps> = () => {
 				text: state.text,
 				userId: authUser.uid,
 				createdAt: date
-			})
-			.then((msg: any) => {
-				console.log("success");
-			})
-			.catch((err: any) => {
-				console.log(`error: ${err.message}`);
 			});
+		// .then((msg: any) => {
+		// 	console.log("success");
+		// })
+		// .catch((err: any) => {
+		// 	console.log(`error: ${err.message}`);
+		// });
 
 		setState({ ...state, text: "" });
 	};
