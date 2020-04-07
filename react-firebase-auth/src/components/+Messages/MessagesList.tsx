@@ -5,12 +5,14 @@ export interface MessagesListProps {
 	messages: any;
 	onRemoveMessage: any;
 	onEditMessage: any;
+	authUser: any;
 }
 
 const MessagesList: React.SFC<MessagesListProps> = ({
 	messages,
 	onRemoveMessage,
-	onEditMessage
+	onEditMessage,
+	authUser
 }) => {
 	return (
 		<ul>
@@ -20,6 +22,7 @@ const MessagesList: React.SFC<MessagesListProps> = ({
 					message={message}
 					onRemoveMessage={onRemoveMessage}
 					onEditMessage={onEditMessage}
+					authUser={authUser}
 				/>
 			))}
 		</ul>

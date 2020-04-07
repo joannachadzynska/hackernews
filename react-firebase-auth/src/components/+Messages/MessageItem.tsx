@@ -5,12 +5,14 @@ export interface MessageItemProps {
 	message: any;
 	onRemoveMessage: any;
 	onEditMessage: any;
+	authUser: any;
 }
 
 const MessageItem: React.SFC<MessageItemProps> = ({
 	message,
 	onRemoveMessage,
-	onEditMessage
+	onEditMessage,
+	authUser
 }) => {
 	const [state, setState] = useState({
 		editMode: false,
@@ -58,18 +60,23 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 				</span>
 			)}
 
-			{editMode ? (
+			{authUser.uid === message.data.userId && (
 				<span>
-					<Button onClick={onSaveEditText}>Save</Button>
-					<Button onClick={toggleEditMode}>Reset</Button>
-				</span>
-			) : (
-				<span>
-					<Button onClick={toggleEditMode}>Edit</Button>
-					<Button onClick={() => onRemoveMessage(message.uid)}>Delete</Button>
+					{editMode ? (
+						<span>
+							<Button onClick={onSaveEditText}>Save</Button>
+							<Button onClick={toggleEditMode}>Reset</Button>
+						</span>
+					) : (
+						<span>
+							<Button onClick={toggleEditMode}>Edit</Button>
+							<Button onClick={() => onRemoveMessage(message.uid)}>
+								Delete
+							</Button>
+						</span>
+					)}
 				</span>
 			)}
-			{/* <Button onClick={() => onRemoveMessage(message.uid)}>Delete</Button> */}
 		</li>
 	);
 };

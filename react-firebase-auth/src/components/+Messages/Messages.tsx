@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FirebaseContext } from "../+Firebase";
+import { AuthUserContext } from "../+Session";
 import MessagesList from "./MessagesList";
 import MessagesForm from "./MessagesForm";
 
@@ -7,6 +8,7 @@ export interface MessagesProps {}
 
 const Messages: React.SFC<MessagesProps> = () => {
 	const firebase = useContext(FirebaseContext);
+	const authUser = useContext(AuthUserContext);
 	const [state, setState] = useState({
 		loading: false,
 		messages: []
@@ -72,6 +74,7 @@ const Messages: React.SFC<MessagesProps> = () => {
 
 			{messages.length > 0 ? (
 				<MessagesList
+					authUser={authUser}
 					messages={messages}
 					onRemoveMessage={onRemoveItem}
 					onEditMessage={onEditMessage}
