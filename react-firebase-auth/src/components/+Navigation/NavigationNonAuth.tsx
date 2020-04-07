@@ -2,7 +2,6 @@ import * as React from "react";
 import { NavLink } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { StyledNavList, StyledLogo } from "./style";
-import { Button } from "../shared";
 import logo from "../../assets/logo.svg";
 import { SignOutButton } from "../+SignOut/style";
 

@@ -11,10 +11,11 @@ const MessagesForm: React.SFC<MessagesFormProps> = () => {
 	const [state, setState] = useState({
 		text: "",
 		loading: false,
-		messages: []
+		messages: [],
+		limit: 5
 	});
 
-	const { text, loading, messages } = state;
+	const { text } = state;
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({

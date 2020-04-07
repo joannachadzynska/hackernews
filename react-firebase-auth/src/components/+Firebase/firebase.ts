@@ -154,15 +154,6 @@ class Firebase implements FirebaseInterface {
 	// *** Message API *** //
 	message = (uid: any) => this.firestore.collection("messages").doc(`${uid}`);
 	messages = () => this.firestore.collection("messages");
-
-	createMessage = async (text: any, additionalData: any) => {
-		if (!text) return;
-		const messageRef = this.firestore.doc(`messages/${text.id}`);
-		const snapShot = await messageRef.get();
-
-		console.log(messageRef);
-	};
-	// messagesFirestore = () => this.firestore.doc(`users/${userAuth.uid}`)
 }
 
 // firebase.analytics();

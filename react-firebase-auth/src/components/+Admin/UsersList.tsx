@@ -7,14 +7,13 @@ export interface UsersListProps {}
 
 const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 	const firebase = useContext(FirebaseContext);
-	// const authUser: any = useContext(AuthUserContext);
+
 	const [state, setState] = useState({
 		loading: false,
 		users: []
 	});
 
 	const { loading, users } = state;
-	// const history = useHistory();
 
 	useEffect(() => {
 		setState({
@@ -32,7 +31,8 @@ const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 			});
 
 		return () => usersCollectionRef();
-	}, []);
+	}, [firebase, state]);
+
 	return (
 		<div>
 			<h2>Users</h2>

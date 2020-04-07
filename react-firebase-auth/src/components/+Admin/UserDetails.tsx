@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
-import { Title } from "../+LandingPage/style";
 import UserDetailsInfo from "./UserDetailsInfo";
 
 export interface UserDetailsProps {}

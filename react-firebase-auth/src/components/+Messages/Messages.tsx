@@ -11,46 +11,44 @@ const Messages: React.SFC<MessagesProps> = () => {
 	const authUser = useContext(AuthUserContext);
 	const [state, setState] = useState({
 		loading: false,
-		messages: []
+		messages: [],
+		limit: 5
 	});
-	const { loading, messages } = state;
+	const { loading, messages, limit } = state;
 
-	useEffect(() => {
+	const onListenForMessages = (limit: any) => {
 		setState({
 			...state,
 			loading: true
 		});
 
-		const messagesCollectionRef = firebase
+		firebase
 			.messages()
+			.orderBy("createdAt")
+			.limit(limit)
 			.onSnapshot((snapshot: any) => {
 				const messagesObject: any = firebase.convertCollectionsSnapshotToMap(
 					snapshot
 				);
 
 				if (messagesObject) {
-					// convert messages list from snapshot
-
-					const messagesList: any = Object.keys(messagesObject).map(
-						(key: any) => ({
-							...messagesObject[key],
-							uid: key
-						})
-					);
-
 					setState({
+						...state,
 						messages: messagesObject,
 						loading: false
 					});
 				} else {
 					setState({
+						...state,
 						messages: [],
 						loading: false
 					});
 				}
 			});
+	};
 
-		return () => messagesCollectionRef();
+	useEffect(() => {
+		onListenForMessages(state.limit);
 	}, []);
 
 	const onRemoveItem = (uid: any) => {
@@ -68,8 +66,22 @@ const Messages: React.SFC<MessagesProps> = () => {
 		});
 	};
 
+	const nextPage = () => {
+		setState({
+			...state,
+			limit: limit + 5
+		});
+
+		onListenForMessages(limit + 5);
+	};
+
 	return (
 		<div>
+			{!loading && messages && (
+				<button type='button' onClick={nextPage}>
+					More
+				</button>
+			)}
 			{loading && <div>Loading ...</div>}
 
 			{messages.length > 0 ? (
@@ -80,7 +92,12 @@ const Messages: React.SFC<MessagesProps> = () => {
 					onEditMessage={onEditMessage}
 				/>
 			) : (
-				<div>There are no messages ... 😥</div>
+				<div>
+					There are no messages ...{" "}
+					<span role='img' aria-label='sad emoji'>
+						😥
+					</span>
+				</div>
 			)}
 
 			<MessagesForm />
