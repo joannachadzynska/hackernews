@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { FirebaseContext } from "../+Firebase";
-import { Button } from "../shared";
-import { convertSecondsToDate } from "../../helpers/utils";
-import { StyledDetails } from "./style";
+import React from "react";
+import { doPasswordReset } from "../../+Firebase/firebase.utils";
+import { Button } from "../../shared";
+import { convertSecondsToDate } from "../../../helpers/utils";
+import { StyledDetails } from "../style";
 
 export interface UserDetailsInfoProps {
 	user: any;
@@ -10,9 +10,8 @@ export interface UserDetailsInfoProps {
 }
 
 const UserDetailsInfo: React.SFC<UserDetailsInfoProps> = ({ user, id }) => {
-	const firebase = useContext(FirebaseContext);
 	const onSendPasswordResetEmail = () => {
-		firebase.doPasswordReset(user.email);
+		doPasswordReset(user.email);
 	};
 
 	return (

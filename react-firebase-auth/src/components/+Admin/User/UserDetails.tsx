@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { FirebaseContext } from "../+Firebase";
+import { userFirestore } from "../../+Firebase/firebase.utils";
 import UserDetailsInfo from "./UserDetailsInfo";
 
 export interface UserDetailsProps {}
@@ -8,7 +8,6 @@ export interface UserDetailsProps {}
 const UserDetails: React.SFC<UserDetailsProps> = () => {
 	const slug: any = useParams();
 	const location: any = useLocation();
-	const firebase = useContext(FirebaseContext);
 	const [state, setState] = useState({
 		loading: false,
 		user: null,
@@ -24,16 +23,16 @@ const UserDetails: React.SFC<UserDetailsProps> = () => {
 			loading: true
 		});
 
-		const userCollectionRef = firebase
-			.userFirestore(slug.userId)
-			.onSnapshot((snapshot: any) => {
+		const userCollectionRef = userFirestore(slug.userId).onSnapshot(
+			(snapshot: any) => {
 				const userDb = snapshot.data();
 
 				setState({
 					user: userDb,
 					loading: false
 				});
-			});
+			}
+		);
 
 		return () => userCollectionRef();
 	}, []);

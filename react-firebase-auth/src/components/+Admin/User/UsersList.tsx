@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import User from "./User";
-import { FirebaseContext } from "../+Firebase";
-import { StyledList } from "./style";
+import { StyledList } from "../style";
+import {
+	usersFirestore,
+	convertCollectionsSnapshotToMap
+} from "../../+Firebase/firebase.utils";
 
 export interface UsersListProps {}
 
 const UsersList: React.SFC<UsersListProps> = React.memo(() => {
-	const firebase = useContext(FirebaseContext);
-
 	const [state, setState] = useState({
 		loading: false,
 		users: []
@@ -21,14 +22,12 @@ const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 			loading: true
 		});
 
-		const usersCollectionRef = firebase
-			.usersFirestore()
-			.onSnapshot((snapshot: any) => {
-				setState({
-					users: firebase.convertCollectionsSnapshotToMap(snapshot),
-					loading: false
-				});
+		const usersCollectionRef = usersFirestore().onSnapshot((snapshot: any) => {
+			setState({
+				users: convertCollectionsSnapshotToMap(snapshot),
+				loading: false
 			});
+		});
 
 		return () => usersCollectionRef();
 	}, []);
