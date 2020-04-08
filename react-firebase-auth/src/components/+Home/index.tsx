@@ -1,10 +1,13 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
+import { useSelector } from "react-redux";
 import * as ROUTES from "../../constants/routes";
 import { Button } from "../shared";
 import Messages from "../+Messages";
+import {
+	onAuthUserListener,
+	doSendEmailVerification
+} from "../+Firebase/firebase.utils";
 
 export interface HomeProps {}
 
@@ -17,23 +20,19 @@ const needsEmailVerification = (authUser: any) =>
 		.includes("password");
 
 const Home: React.SFC<HomeProps> = () => {
-	const firebase = React.useContext(FirebaseContext);
-
 	const history = useHistory();
-
-	const authUser: any = React.useContext(AuthUserContext);
+	const authUser = useSelector((state: any) => state.auth.currentUser);
 
 	const condition = (authUser: any) => !!authUser;
-
 	const [isSent, setIsSent] = React.useState(false);
 
 	const onSendEmailVerification = () => {
-		firebase.doSendEmailVerification();
+		doSendEmailVerification();
 		setIsSent(true);
 	};
 
 	React.useEffect(() => {
-		const listen = firebase.onAuthUserListener(
+		const listen = onAuthUserListener(
 			(authUser: any) => {
 				if (!condition(authUser)) {
 					history.push(ROUTES.SIGN_IN);
@@ -43,7 +42,7 @@ const Home: React.SFC<HomeProps> = () => {
 		);
 
 		return () => listen();
-	}, [firebase, history]);
+	}, [history]);
 
 	return needsEmailVerification(authUser) ? (
 		<div>

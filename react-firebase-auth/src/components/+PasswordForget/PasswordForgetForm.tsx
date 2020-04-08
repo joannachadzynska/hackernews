@@ -1,18 +1,14 @@
 import React from "react";
 import { InputWithLabel, Button } from "../shared";
-
-export interface PasswordForgetFormProps {
-	firebase: any;
-}
+import { doPasswordReset } from "../+Firebase/firebase.utils";
+export interface PasswordForgetFormProps {}
 
 const initialState = {
 	email: "",
 	error: null
 };
 
-const PasswordForgetForm: React.SFC<PasswordForgetFormProps> = ({
-	firebase
-}) => {
+const PasswordForgetForm: React.SFC<PasswordForgetFormProps> = () => {
 	const [state, setState] = React.useState(initialState);
 	const { email, error } = state;
 
@@ -22,7 +18,7 @@ const PasswordForgetForm: React.SFC<PasswordForgetFormProps> = ({
 		e.preventDefault();
 
 		try {
-			await firebase.doPasswordReset(email);
+			await doPasswordReset(email);
 			setState({ ...initialState });
 		} catch (error) {
 			setState({

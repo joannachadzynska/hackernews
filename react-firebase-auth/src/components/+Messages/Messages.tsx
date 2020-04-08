@@ -1,15 +1,18 @@
-import React, { useContext, useState, useEffect } from "react";
-import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import MessagesList from "./MessagesList";
 import MessagesForm from "./MessagesForm";
 import { Button } from "../shared";
+import {
+	messagesFirestore,
+	messageFirestore,
+	convertCollectionsSnapshotToMap
+} from "../+Firebase/firebase.utils";
 
 export interface MessagesProps {}
 
 const Messages: React.SFC<MessagesProps> = () => {
-	const firebase = useContext(FirebaseContext);
-	const authUser = useContext(AuthUserContext);
+	const authUser = useSelector((state: any) => state.auth.currentUser);
 	const [state, setState] = useState({
 		loading: false,
 		messages: [],
@@ -23,14 +26,11 @@ const Messages: React.SFC<MessagesProps> = () => {
 			loading: true
 		});
 
-		firebase
-			.messages()
+		messagesFirestore()
 			.orderBy("createdAt")
 			.limit(limit)
 			.onSnapshot((snapshot: any) => {
-				const messagesObject: any = firebase.convertCollectionsSnapshotToMap(
-					snapshot
-				);
+				const messagesObject: any = convertCollectionsSnapshotToMap(snapshot);
 
 				if (messagesObject) {
 					setState({
@@ -53,14 +53,14 @@ const Messages: React.SFC<MessagesProps> = () => {
 	}, []);
 
 	const onRemoveItem = (uid: any) => {
-		firebase.message(uid).delete();
+		messageFirestore(uid).delete();
 	};
 
 	const onEditMessage = (message: any, text: any) => {
 		const { uid, data } = message;
 		const date = new Date();
 
-		firebase.message(uid).set({
+		messageFirestore(uid).set({
 			...data,
 			text,
 			editedAt: date

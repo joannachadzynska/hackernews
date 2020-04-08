@@ -9,9 +9,7 @@ const LandingPage: React.SFC<LandingPageProps> = () => {
 	return (
 		<StyledLandingPage>
 			<Title>Landing Page...</Title>
-			<Subtitle>
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non, quia.
-			</Subtitle>
+			<Subtitle>welcome here something blah blah blah</Subtitle>
 			<MainButton>
 				<Link to={ROUTES.SIGN_IN}>Sign in now</Link>
 			</MainButton>

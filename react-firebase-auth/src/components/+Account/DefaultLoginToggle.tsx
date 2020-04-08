@@ -50,7 +50,7 @@ const DefaultLoginToggle: React.SFC<DefaultLoginToggleProps> = ({
 		<form onSubmit={handleSubmit}>
 			<InputWithLabel
 				name='passwordOne'
-				id={passwordOne}
+				id='passwordOne'
 				value={passwordOne}
 				type='password'
 				onInputChange={handleChange}>
@@ -59,7 +59,7 @@ const DefaultLoginToggle: React.SFC<DefaultLoginToggleProps> = ({
 
 			<InputWithLabel
 				name='passwordTwo'
-				id={passwordTwo}
+				id='passwordTwo'
 				value={passwordTwo}
 				type='password'
 				onInputChange={handleChange}>

@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
 import facebook from "../../assets/facebook3.svg";
 import { StyledButtonWithIcon } from "./style";
+import {
+	doSignInWithFacebook,
+	createUserProfileDocument
+} from "../+Firebase/firebase.utils";
 
 export interface SignInWithFacebookProps {
-	firebase: any;
 	history: any;
 }
 
 const SignInWithFacebook: React.SFC<SignInWithFacebookProps> = ({
-	firebase,
 	history
 }) => {
 	const [error, setError] = useState(null);
@@ -17,10 +19,9 @@ const SignInWithFacebook: React.SFC<SignInWithFacebookProps> = ({
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		firebase
-			.doSignInWithFacebook()
+		doSignInWithFacebook()
 			.then((user: any) => {
-				firebase.createUserProfileDocument(user.user, { roles: [] });
+				createUserProfileDocument(user.user, { roles: [] });
 				setError(null);
 				history.push(ROUTES.HOME);
 			})

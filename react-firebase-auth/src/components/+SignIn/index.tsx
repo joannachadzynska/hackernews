@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { FirebaseContext } from "../+Firebase";
+
 import SignInForm from "./SignInForm";
 import SignUpLink from "../+SignUp/SignUpLink";
 import PasswordForgetLink from "../+PasswordForget/PasswordForgetLink";
@@ -23,24 +23,19 @@ const errorCodes = {
 };
 
 const SignIn: React.SFC<SignInProps> = () => {
-	const firebase = useContext(FirebaseContext);
 	const history = useHistory();
 	return (
 		<div>
 			<Title>Sign In</Title>
-			<SignInForm firebase={firebase} history={history} />
+			<SignInForm history={history} />
 			<br />
 			<hr />
 			<p>Or sign in with: </p>
 			<br />
 			<SocialSignInLinks>
-				<SignInWithGoogle
-					firebase={firebase}
-					history={history}
-					errorCodes={errorCodes}
-				/>
-				<SignInWithFacebook firebase={firebase} history={history} />
-				<SignInWithTwitter firebase={firebase} history={history} />
+				<SignInWithGoogle history={history} errorCodes={errorCodes} />
+				<SignInWithFacebook history={history} />
+				<SignInWithTwitter history={history} />
 			</SocialSignInLinks>
 			<br />
 			<PasswordForgetLink />

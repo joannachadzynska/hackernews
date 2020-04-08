@@ -1,5 +1,11 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
-import { FirebaseContext } from "../+Firebase";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+	auth,
+	emailAuthProvider,
+	googleProvider,
+	facebookProvider,
+	twitterProvider
+} from "../+Firebase/firebase.utils";
 import DefaultLoginToggle from "./DefaultLoginToggle";
 import SocialLoginToggle from "./SocialLoginToggle";
 import { SignInMethodsList } from "./style";
@@ -15,21 +21,19 @@ const SIGN_IN_METHODS = [
 	},
 	{
 		id: "google.com",
-		provider: "googleProvider"
+		provider: googleProvider
 	},
 	{
 		id: "facebook.com",
-		provider: "facebookProvider"
+		provider: facebookProvider
 	},
 	{
 		id: "twitter.com",
-		provider: "twitterProvider"
+		provider: twitterProvider
 	}
 ];
 
 const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
-	const firebase = useContext(FirebaseContext);
-
 	const [state, setState] = useState({
 		activeSignInMethods: [],
 		error: null
@@ -37,8 +41,7 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 
 	const fetchSignInMethods = useCallback(() => {
 		const email = authUser.email !== undefined ? authUser.email : "";
-
-		firebase.auth
+		auth
 			.fetchSignInMethodsForEmail(email)
 			.then((activeSignInMethods: any) =>
 				setState({ activeSignInMethods, error: null })
@@ -48,31 +51,30 @@ const LoginManagement: React.SFC<LoginManagementProps> = ({ authUser }) => {
 
 	useEffect(() => {
 		// setUser(authUser);
-		fetchSignInMethods();
+		const getMethods = fetchSignInMethods();
+
+		return () => getMethods;
 	}, [fetchSignInMethods]);
 
 	const onSocialLoginLink = (provider: any) => {
-		firebase.auth.currentUser
-			.linkWithPopup(firebase[provider])
+		auth.currentUser
+			?.linkWithPopup(provider)
 			.then(fetchSignInMethods)
 			.catch((err: any) => setState({ ...state, error: err.message }));
 	};
 
 	const onUnLink = (providerId: any) => {
-		firebase.auth.currentUser
-			.unLink(providerId)
+		auth.currentUser
+			?.unlink(providerId)
 			.then(fetchSignInMethods)
 			.catch((err: any) => setState({ ...state, error: err.message }));
 	};
 
 	const onDefaultLoginLink = (password: any) => {
-		const credential = firebase.emailAuthProvider.credential(
-			authUser.email,
-			password
-		);
+		const credential = emailAuthProvider.credential(authUser.email, password);
 
-		firebase.auth.currentUser
-			.linkAndRetrieveDataWithCredential(credential)
+		auth.currentUser
+			?.linkAndRetrieveDataWithCredential(credential)
 			.then(fetchSignInMethods)
 			.catch((err: any) => setState({ ...state, error: err.message }));
 	};

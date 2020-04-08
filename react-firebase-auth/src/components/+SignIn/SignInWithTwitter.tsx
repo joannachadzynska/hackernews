@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import * as ROUTES from "../../constants/routes";
 import twitter from "../../assets/twitter2.svg";
 import { StyledButtonWithIcon } from "./style";
+import {
+	doSignInWithTwitter,
+	createUserProfileDocument
+} from "../+Firebase/firebase.utils";
 
 export interface SignInWithTwitterProps {
-	firebase: any;
 	history: any;
 }
 
-const SignInWithTwitter: React.SFC<SignInWithTwitterProps> = ({
-	firebase,
-	history
-}) => {
+const SignInWithTwitter: React.SFC<SignInWithTwitterProps> = ({ history }) => {
 	const [error, setError] = useState(null);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		firebase
-			.doSignInWithTwitter()
+		doSignInWithTwitter()
 			.then((user: any) => {
 				const displayName = user.additionalUserInfo.username;
 				const email = user.additionalUserInfo.profile.name;
-				firebase.createUserProfileDocument(user.user, {
+				createUserProfileDocument(user.user, {
 					roles: [],
 					displayName,
 					email

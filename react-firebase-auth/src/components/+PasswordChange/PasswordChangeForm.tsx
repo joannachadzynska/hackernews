@@ -1,9 +1,8 @@
 import React, { useState } from "react";
+import { doPasswordUpdate } from "../+Firebase/firebase.utils";
 import { InputWithLabel, Button } from "../shared";
 
-export interface PasswordChangeFormProps {
-	firebase: any;
-}
+export interface PasswordChangeFormProps {}
 
 const initialState = {
 	passwordOne: "",
@@ -11,9 +10,7 @@ const initialState = {
 	error: null
 };
 
-const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
-	firebase
-}) => {
+const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = () => {
 	const [state, setState] = useState(initialState);
 	const { passwordOne, passwordTwo, error } = state;
 
@@ -23,7 +20,7 @@ const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
 		e.preventDefault();
 
 		try {
-			await firebase.doPasswordUpdate(passwordOne);
+			await doPasswordUpdate(passwordOne);
 			setState({ ...initialState });
 		} catch (error) {
 			setState({
@@ -45,7 +42,7 @@ const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
 			<InputWithLabel
 				type='password'
 				name='passwordOne'
-				id={passwordOne}
+				id='password One'
 				value={passwordOne}
 				onInputChange={handleChange}>
 				New Password
@@ -54,7 +51,7 @@ const PasswordChangeForm: React.SFC<PasswordChangeFormProps> = ({
 			<InputWithLabel
 				type='password'
 				name='passwordTwo'
-				id={passwordTwo}
+				id='password Two'
 				value={passwordTwo}
 				onInputChange={handleChange}>
 				Confirm New Password

@@ -1,8 +1,13 @@
-import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../+Firebase";
+import React, { useState } from "react";
+
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 import { Button, InputWithLabel } from "../shared";
+import {
+	doCreateUserWithEmailAndPassword,
+	createUserProfileDocument,
+	doSendEmailVerification
+} from "../+Firebase/firebase.utils";
 
 export interface SignUpFormProps {
 	history: any;
@@ -19,7 +24,6 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 		error: ""
 	};
 	const [state, setState] = useState(initialState);
-	const firebase = useContext(FirebaseContext);
 	const {
 		displayName,
 		email,
@@ -43,18 +47,18 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			roles.push(ROLES.ADMIN);
 		}
 		try {
-			const { user } = await firebase.doCreateUserWithEmailAndPassword(
+			const { user } = await doCreateUserWithEmailAndPassword(
 				email,
 				passwordOne
 			);
 
-			await firebase.createUserProfileDocument(user, {
+			await createUserProfileDocument(user, {
 				displayName,
 				email,
 				roles
 			});
 
-			firebase.doSendEmailVerification();
+			doSendEmailVerification();
 			setState({ ...initialState });
 			history.push(ROUTES.HOME);
 		} catch (error) {
@@ -89,7 +93,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			<InputWithLabel
 				type='text'
 				value={displayName}
-				id={displayName}
+				id='display name'
 				name='displayName'
 				onInputChange={handleChange}>
 				Username
@@ -98,7 +102,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			<InputWithLabel
 				type='email'
 				value={email}
-				id={email}
+				id='email'
 				name='email'
 				onInputChange={handleChange}>
 				Email Address
@@ -107,7 +111,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			<InputWithLabel
 				type='password'
 				value={passwordOne}
-				id={passwordOne}
+				id='password one'
 				name='passwordOne'
 				onInputChange={handleChange}>
 				Password
@@ -116,7 +120,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			<InputWithLabel
 				type='password'
 				value={passwordTwo}
-				id={passwordTwo}
+				id='password two'
 				name='passwordTwo'
 				onInputChange={handleChange}>
 				Confirm Password

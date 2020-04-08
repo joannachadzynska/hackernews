@@ -3,15 +3,17 @@ import * as ROUTES from "../../constants/routes";
 
 import gmail from "../../assets/gmail.svg";
 import { StyledButtonWithIcon } from "./style";
+import {
+	doSignInWithGoogle,
+	createUserProfileDocument
+} from "../+Firebase/firebase.utils";
 
 export interface SignInWithGoogleProps {
-	firebase: any;
 	history: any;
 	errorCodes: any;
 }
 
 const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
-	firebase,
 	history,
 	errorCodes
 }) => {
@@ -19,10 +21,9 @@ const SignInWithGoogle: React.SFC<SignInWithGoogleProps> = ({
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		firebase
-			.doSignInWithGoogle()
+		doSignInWithGoogle()
 			.then((user: any) => {
-				firebase.createUserProfileDocument(user.user, { roles: [] });
+				createUserProfileDocument(user.user, { roles: [] });
 				setError(null);
 				history.push(ROUTES.HOME);
 			})

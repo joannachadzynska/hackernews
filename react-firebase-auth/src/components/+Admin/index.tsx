@@ -1,25 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory, Switch, Route } from "react-router-dom";
-import { FirebaseContext } from "../+Firebase";
-// import { AuthUserContext } from "../+Session";
-import UsersList from "./UsersList";
+
+import UsersList from "./User/UsersList";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
-import UserDetails from "./UserDetails";
+import UserDetails from "./User/UserDetails";
+import { onAuthUserListener } from "../+Firebase/firebase.utils";
 
 export interface AdminProps {}
 
 const Admin: React.SFC<AdminProps> = () => {
-	const firebase = useContext(FirebaseContext);
-	// const authUser: any = useContext(AuthUserContext);
-
 	const history = useHistory();
 
 	const condition = (authUser: any) =>
 		authUser && authUser.roles.includes(ROLES.ADMIN);
 
 	useEffect(() => {
-		const listen = firebase.onAuthUserListener(
+		const listen = onAuthUserListener(
 			(authUser: any) => {
 				if (!condition(authUser)) {
 					history.push(ROUTES.SIGN_IN);
@@ -28,7 +25,7 @@ const Admin: React.SFC<AdminProps> = () => {
 			() => history.push(ROUTES.SIGN_IN)
 		);
 		return () => listen();
-	}, []);
+	}, [history]);
 
 	return (
 		<div>

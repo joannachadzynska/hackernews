@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
+import { auth } from "../+Firebase/firebase.utils";
 import * as ROUTES from "../../constants/routes";
 import PasswordForgetForm from "../+PasswordForget/PasswordForgetForm";
 import PasswordChangeForm from "../+PasswordChange/PasswordChangeForm";
@@ -11,32 +10,29 @@ import LoginManagement from "./LoginManagement";
 export interface AccountProps {}
 
 const Account: React.SFC<AccountProps> = () => {
-	const firebase = React.useContext(FirebaseContext);
 	const history = useHistory();
-	const authUser: any = React.useContext(AuthUserContext);
-	const currentUser = useSelector((state: any) => state.auth.currentUser);
-	// console.log(currentUser);
+	const authUser = useSelector((state: any) => state.auth.currentUser);
 
 	React.useEffect(() => {
-		const listener = firebase.auth.onAuthStateChanged((authUser: any) => {
+		const listener = auth.onAuthStateChanged((authUser: any) => {
 			if (!authUser) {
 				history.push(ROUTES.SIGN_IN);
 			}
 		});
 
 		return () => listener();
-	}, [firebase, history]);
+	}, [history]);
 
 	return (
 		<div>
 			<h1>Account: {authUser !== null ? authUser.email : "user email"}</h1>
 
-			<PasswordForgetForm firebase={firebase} />
+			<PasswordForgetForm />
 
 			<br />
 			<hr />
 			<br />
-			<PasswordChangeForm firebase={firebase} />
+			<PasswordChangeForm />
 			<br />
 			<hr />
 			<br />

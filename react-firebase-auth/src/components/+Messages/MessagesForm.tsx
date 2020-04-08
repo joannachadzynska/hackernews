@@ -1,13 +1,12 @@
-import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../+Firebase";
-import { AuthUserContext } from "../+Session";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { InputWithLabel, Button } from "../shared";
+import { messagesFirestore } from "../+Firebase/firebase.utils";
 
 export interface MessagesFormProps {}
 
 const MessagesForm: React.SFC<MessagesFormProps> = () => {
-	const firebase = useContext(FirebaseContext);
-	const authUser: any = useContext(AuthUserContext);
+	const authUser: any = useSelector((state: any) => state.auth.currentUser);
 	const [state, setState] = useState({
 		text: "",
 		loading: false,
@@ -30,20 +29,14 @@ const MessagesForm: React.SFC<MessagesFormProps> = () => {
 	) => {
 		e.preventDefault();
 		const date = new Date();
-		firebase
-			.messages()
+
+		messagesFirestore()
 			.doc()
 			.set({
 				text: state.text,
 				userId: authUser.uid,
 				createdAt: date
 			});
-		// .then((msg: any) => {
-		// 	console.log("success");
-		// })
-		// .catch((err: any) => {
-		// 	console.log(`error: ${err.message}`);
-		// });
 
 		setState({ ...state, text: "" });
 	};

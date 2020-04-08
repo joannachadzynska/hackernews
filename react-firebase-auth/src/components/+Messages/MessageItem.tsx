@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { FirebaseContext } from "../+Firebase";
+import React, { useState, useEffect } from "react";
 import { convertMessageDate } from "../../helpers/utils";
+import { userFirestore } from "../+Firebase/firebase.utils";
 import { InputWithLabel } from "../shared";
 import {
 	StyledButtonWithIcon,
@@ -26,7 +26,6 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 	onEditMessage,
 	authUser
 }) => {
-	const firebase = useContext(FirebaseContext);
 	const [state, setState] = useState({
 		editMode: false,
 		editText: message.data.text
@@ -37,9 +36,8 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 	});
 
 	useEffect(() => {
-		const otherChatUser = firebase
-			.userFirestore(message.data.userId)
-			.onSnapshot((snapshot: any) => {
+		const otherChatUser = userFirestore(message.data.userId).onSnapshot(
+			(snapshot: any) => {
 				if (authUser.id !== message.data.userId) {
 					setOtherUser({
 						displayName: snapshot.data().displayName,
@@ -51,7 +49,8 @@ const MessageItem: React.SFC<MessageItemProps> = ({
 						displayName: ""
 					});
 				}
-			});
+			}
+		);
 
 		return () => otherChatUser();
 	}, []);
