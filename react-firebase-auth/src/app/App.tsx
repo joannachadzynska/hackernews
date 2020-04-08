@@ -35,7 +35,7 @@ const App = () => {
 					// 	setAuthUser({ id: snapShot.id, ...snapShot.data() });
 					// });
 				}
-				// localStorage.setItem("authUser", JSON.stringify(authUser));
+				localStorage.setItem("authUser", JSON.stringify(authUser));
 				setAuthUser(authUser);
 				dispatch(setCurrentUser(authUser));
 			},

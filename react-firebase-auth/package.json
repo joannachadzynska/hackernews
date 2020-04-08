@@ -28,6 +28,7 @@
 		"recompose": "^0.30.0",
 		"redux-firestore": "^0.13.0",
 		"redux-logger": "^3.0.6",
+		"redux-persist": "^6.0.0",
 		"styled-components": "^5.0.1",
 		"typescript": "^3.8.3"
 	},

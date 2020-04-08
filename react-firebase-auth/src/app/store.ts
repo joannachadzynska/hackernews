@@ -5,14 +5,15 @@ import {
 	getDefaultMiddleware
 } from "@reduxjs/toolkit";
 import logger from "redux-logger";
+import { persistStore } from "redux-persist";
 import { reduxBatch } from "@manaflair/redux-batch";
-import { getFirestore } from "redux-firestore";
-import { getFirebase } from "react-redux-firebase";
+// import { getFirestore } from "redux-firestore";
+// import { getFirebase } from "react-redux-firebase";
 import rootReducer from "./rootReducer";
 
-const middleware = [...getDefaultMiddleware(), logger];
+// const middleware = [...getDefaultMiddleware(), logger];
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: rootReducer,
 	middleware: [logger],
 	devTools: process.env.NODE_ENV !== "production",
@@ -23,4 +24,4 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
 
-export default store;
+export const persistor = persistStore(store);

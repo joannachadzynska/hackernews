@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FirebaseContext } from "../+Firebase";
 import { AuthUserContext } from "../+Session";
@@ -13,6 +14,8 @@ const Account: React.SFC<AccountProps> = () => {
 	const firebase = React.useContext(FirebaseContext);
 	const history = useHistory();
 	const authUser: any = React.useContext(AuthUserContext);
+	const currentUser = useSelector((state: any) => state.auth.currentUser);
+	// console.log(currentUser);
 
 	React.useEffect(() => {
 		const listener = firebase.auth.onAuthStateChanged((authUser: any) => {
