@@ -11,7 +11,7 @@ export const convertSecondsToDate = (timestamp: number) => {
 
 export const convertMessageDate = (timestamp: number) => {
 	const date = fromUnixTime(timestamp);
-	const formatDate = format(date, "iii LLL y, k:m:s");
+	// const formatDate = format(date, "iii LLL y, k:m:s");
 	const today = new Date();
 	const distance = formatDistance(date, today);
 
