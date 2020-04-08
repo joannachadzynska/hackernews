@@ -1,6 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { FirebaseContext } from "../components/+Firebase";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/auth/authSlice";
 import {
 	Navigation,
 	LandingPage,
@@ -19,6 +21,7 @@ import "./App.css";
 const App = () => {
 	const [authUser, setAuthUser] = useSemiPersistentState("authUser", null);
 	const firebase = useContext(FirebaseContext);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const listener = firebase.onAuthUserListener(
@@ -34,9 +37,11 @@ const App = () => {
 				}
 				// localStorage.setItem("authUser", JSON.stringify(authUser));
 				setAuthUser(authUser);
+				dispatch(setCurrentUser(authUser));
 			},
 			() => {
 				setAuthUser("");
+				dispatch(setCurrentUser(""));
 				localStorage.removeItem("authUser");
 			}
 		);

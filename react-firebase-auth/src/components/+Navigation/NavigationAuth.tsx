@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { AuthUserContext } from "../+Session";
+import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
@@ -10,7 +10,7 @@ import logo from "../../assets/logo.svg";
 export interface NavigationAuthProps {}
 
 const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
-	const authUser: any = useContext(AuthUserContext);
+	const authUser = useSelector((state: any) => state.auth.currentUser);
 
 	return (
 		<StyledNavList className='wrapper'>

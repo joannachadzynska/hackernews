@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { AuthUserContext } from "../+Session";
+import React from "react";
+import { useSelector } from "react-redux";
 import NavigationAuth from "./NavigationAuth";
 import NavigationNonAuth from "./NavigationNonAuth";
 import { StyledNav } from "./style";
@@ -7,10 +7,10 @@ import { StyledNav } from "./style";
 export interface NavigationProps {}
 
 const Navigation: React.SFC<NavigationProps> = () => {
-	const authUser = useContext(AuthUserContext);
+	const currentUser = useSelector((state: any) => state.auth.currentUser);
 	return (
 		<StyledNav>
-			{authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+			{currentUser ? <NavigationAuth /> : <NavigationNonAuth />}
 		</StyledNav>
 	);
 };
