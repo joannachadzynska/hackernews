@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
+// import { AppThunk, RootState } from "../../app/store";
 
 interface AuthState {
 	currentUser: any;
@@ -17,12 +17,6 @@ export const authSlice = createSlice({
 	reducers: {
 		setCurrentUser(state, action: PayloadAction<any>) {
 			state.currentUser = action.payload;
-		},
-		toggleTodo(state, action) {
-			// const todo = state.find((todo) => todo.id === action.payload);
-			// if (todo) {
-			// 	todo.completed = !todo.completed;
-			// }
 		}
 	}
 });
