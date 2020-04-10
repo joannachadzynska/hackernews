@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../features/auth/authSlice";
 import {
 	createUserProfileDocument,
-	onAuthUserListener
+	onAuthUserListener,
 } from "../components/+Firebase/firebase.utils";
 import {
 	Navigation,
@@ -15,10 +15,11 @@ import {
 	PasswordForget,
 	Home,
 	Account,
-	Admin
+	Admin,
 } from "../components";
 import * as ROUTES from "../constants/routes";
 import "./App.css";
+import Todos from "../features/todos/Todos";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const App = () => {
 				if (authUser) {
 					const displayName = authUser.displayName;
 					createUserProfileDocument(authUser, {
-						displayName
+						displayName,
 					});
 					// userRef.onSnapshot((snapShot: any) => {
 					// 	setAuthUser({ id: snapShot.id, ...snapShot.data() });
@@ -74,6 +75,9 @@ const App = () => {
 					</Route>
 					<Route path={ROUTES.ADMIN}>
 						<Admin />
+					</Route>
+					<Route path={ROUTES.TODOS}>
+						<Todos />
 					</Route>
 				</Switch>
 			</main>
