@@ -27,6 +27,11 @@ const NavigationAuth: React.SFC<NavigationAuthProps> = () => {
 					Account
 				</NavLink>
 			</li>
+			<li>
+				<NavLink to={ROUTES.TODOS} activeClassName='active'>
+					Todos
+				</NavLink>
+			</li>
 			{authUser.roles !== undefined
 				? authUser.roles.includes(ROLES.ADMIN) && (
 						<li>
