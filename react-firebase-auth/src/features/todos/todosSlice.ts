@@ -1,15 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import uid from "uid";
 
-const initialState: any = {
-	todos: [],
-};
-
-type Payload = {
-	id: string;
-	text: string;
-};
-
 export const todosSlice = createSlice({
 	name: "todos",
 	initialState: [],

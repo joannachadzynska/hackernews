@@ -10,6 +10,7 @@ const Todos: React.SFC<TodosProps> = () => {
 		<div>
 			<h1>todos</h1>
 			<AddTodo />
+			<br />
 			<VisibleTodoList />
 			<Filter />
 		</div>
