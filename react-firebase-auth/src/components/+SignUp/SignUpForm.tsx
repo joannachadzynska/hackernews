@@ -6,7 +6,7 @@ import { Button, InputWithLabel } from "../shared";
 import {
 	doCreateUserWithEmailAndPassword,
 	createUserProfileDocument,
-	doSendEmailVerification
+	doSendEmailVerification,
 } from "../+Firebase/firebase.utils";
 
 export interface SignUpFormProps {
@@ -21,7 +21,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 		passwordOne: "",
 		passwordTwo: "",
 		isAdmin: false,
-		error: ""
+		error: "",
 	};
 	const [state, setState] = useState(initialState);
 	const {
@@ -30,7 +30,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 		passwordOne,
 		passwordTwo,
 		error,
-		isAdmin
+		isAdmin,
 	} = state;
 
 	const isInvalid =
@@ -55,7 +55,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			await createUserProfileDocument(user, {
 				displayName,
 				email,
-				roles
+				roles,
 			});
 
 			doSendEmailVerification();
@@ -67,7 +67,7 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 			}
 			setState({
 				...state,
-				error: error.message
+				error: error.message,
 			});
 		}
 	};
@@ -76,17 +76,17 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 		const { name, value } = e.target;
 		setState({
 			...state,
-			[name]: value
+			[name]: value,
 		});
 	};
 
-	const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, checked } = e.target;
-		setState({
-			...state,
-			[name]: checked
-		});
-	};
+	// const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const { name, checked } = e.target;
+	// 	setState({
+	// 		...state,
+	// 		[name]: checked,
+	// 	});
+	// };
 
 	return (
 		<form onSubmit={handleSubmit} noValidate>
@@ -126,14 +126,14 @@ const SignUpForm: React.SFC<SignUpFormProps> = ({ history, errorCodes }) => {
 				Confirm Password
 			</InputWithLabel>
 
-			<InputWithLabel
+			{/* <InputWithLabel
 				type='checkbox'
 				name='isAdmin'
 				onInputChange={handleChangeCheckbox}
 				id='isAdmin'
 				checked={isAdmin}>
 				Admin
-			</InputWithLabel>
+			</InputWithLabel> */}
 
 			<Button type='submit' disabled={isInvalid}>
 				Sign Up
