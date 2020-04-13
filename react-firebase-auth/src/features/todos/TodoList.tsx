@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTodo } from "./todosSlice";
 import Todo from "./Todo";
-
+import { StyledTodoList } from "./style";
 export interface TodoListProps {}
 
 const TodoList: React.SFC<TodoListProps> = () => {
@@ -12,7 +12,7 @@ const TodoList: React.SFC<TodoListProps> = () => {
 
 	return (
 		<div>
-			<ul>
+			<StyledTodoList>
 				{todos &&
 					todos.map((todo: any) => (
 						<Todo
@@ -21,7 +21,7 @@ const TodoList: React.SFC<TodoListProps> = () => {
 							onClick={() => dispatch(toggleTodo(todo.id))}
 						/>
 					))}
-			</ul>
+			</StyledTodoList>
 		</div>
 	);
 };

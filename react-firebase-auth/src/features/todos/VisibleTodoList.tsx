@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTodo } from "./todosSlice";
 import Todo from "./Todo";
 import { VisibilityFilters } from "../filters/filtersSlice";
+import { StyledTodoList } from "./style";
 export interface TodoListProps {}
 
 const VisibleTodoList: React.SFC<TodoListProps> = () => {
@@ -27,7 +28,7 @@ const VisibleTodoList: React.SFC<TodoListProps> = () => {
 
 	return (
 		<div>
-			<ul>
+			<StyledTodoList>
 				{todos &&
 					filteredTodos.map((todo: any) => (
 						<Todo
@@ -36,7 +37,7 @@ const VisibleTodoList: React.SFC<TodoListProps> = () => {
 							onClick={() => dispatch(toggleTodo(todo.id))}
 						/>
 					))}
-			</ul>
+			</StyledTodoList>
 		</div>
 	);
 };
