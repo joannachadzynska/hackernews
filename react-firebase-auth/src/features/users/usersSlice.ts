@@ -1,56 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AppThunk } from "../../app/store";
 
 interface AuthState {
-	users: any;
+	users: any[];
 	loading: boolean;
-	error: any;
+	error: string | null;
 }
 
 const initialState: AuthState = {
 	users: [],
 	loading: false,
-	error: null
+	error: null,
 };
 
-interface CurrentRepo {}
+const startLoading = (state: AuthState) => {
+	state.loading = true;
+};
+
+const loadingFailed = (state: AuthState, action: any) => {
+	state.loading = false;
+	state.error = action.payload;
+};
 
 export const userSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		getUsersStart(state) {
-			state.loading = true;
-			state.error = null;
+		getUsersStart: startLoading,
+		getUsersSuccess: (state, action) => {
+			console.log(action.payload);
 		},
-		getUsersSuccess(state, action) {
-			state.loading = false;
-			state.error = null;
-			state.users = action.payload;
-		},
-		getUsersFailure(state, action) {
-			state.loading = false;
-			state.error = action.payload;
-		}
-	}
+		getUsersFailure: loadingFailed,
+	},
 });
 
 export const {
 	getUsersStart,
 	getUsersSuccess,
-	getUsersFailure
+	getUsersFailure,
 } = userSlice.actions;
-
-export const getAllUsers = (): AppThunk => (dispatch) => {
-	try {
-		dispatch(getUsersStart());
-		const response = "sdfasds";
-		console.log(response);
-
-		dispatch(getUsersSuccess(response));
-	} catch (error) {
-		dispatch(getUsersFailure(error));
-	}
-};
 
 export default userSlice.reducer;

@@ -3,7 +3,7 @@ import User from "./User";
 import { StyledList } from "../style";
 import {
 	usersFirestore,
-	convertCollectionsSnapshotToMap
+	convertCollectionsSnapshotToMap,
 } from "../../+Firebase/firebase.utils";
 
 export interface UsersListProps {}
@@ -11,25 +11,27 @@ export interface UsersListProps {}
 const UsersList: React.SFC<UsersListProps> = React.memo(() => {
 	const [state, setState] = useState({
 		loading: false,
-		users: []
+		users: [],
 	});
 
 	const { loading, users } = state;
 
-	useEffect(() => {
+	const getAllUsers = () => {
 		setState({
 			...state,
-			loading: true
+			loading: true,
 		});
 
-		const usersCollectionRef = usersFirestore().onSnapshot((snapshot: any) => {
+		usersFirestore().onSnapshot((snapshot: any) => {
 			setState({
 				users: convertCollectionsSnapshotToMap(snapshot),
-				loading: false
+				loading: false,
 			});
 		});
+	};
 
-		return () => usersCollectionRef();
+	useEffect(() => {
+		getAllUsers();
 	}, []);
 
 	return (

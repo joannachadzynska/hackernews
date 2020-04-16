@@ -1,9 +1,4 @@
-import {
-	configureStore,
-	ThunkAction,
-	Action,
-	getDefaultMiddleware
-} from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { persistStore } from "redux-persist";
 import { reduxBatch } from "@manaflair/redux-batch";
@@ -17,7 +12,7 @@ export const store = configureStore({
 	reducer: rootReducer,
 	middleware: [logger],
 	devTools: process.env.NODE_ENV !== "production",
-	enhancers: [reduxBatch]
+	enhancers: [reduxBatch],
 });
 
 export type AppDispatch = typeof store.dispatch;
