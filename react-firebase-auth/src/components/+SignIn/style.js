@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export const StyledSignIn = styled.div``;
-
 export const SocialSignInLinks = styled.div`
 	display: flex;
 	align-items: center;
